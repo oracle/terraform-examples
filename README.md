@@ -1,11 +1,11 @@
-Oracle Public Cloud SDK
-=======================
+Terraform Provider for Oracle Compute Cloud
+===========================================
 
 Requirements
 ------------
 
 * Go 1.6
-* Oracle Public Cloud Account (for Integration Test)
+* Oracle Public Cloud Account
 
 Building
 --------
