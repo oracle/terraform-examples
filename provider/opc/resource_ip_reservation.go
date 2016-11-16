@@ -38,6 +38,12 @@ func resourceIPReservation() *schema.Resource {
 				ForceNew: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
+			
+			"ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: false,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -67,6 +73,7 @@ func updateIPReservationResourceData(d *schema.ResourceData, info *compute.IPRes
 	d.Set("parentpool", info.ParentPool)
 	d.Set("permanent", info.Permanent)
 	d.Set("tags", info.Tags)
+	d.Set("ip", info.IP)
 }
 
 func resourceIPReservationRead(d *schema.ResourceData, meta interface{}) error {
