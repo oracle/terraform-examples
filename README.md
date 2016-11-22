@@ -31,7 +31,7 @@ Usage
 Add the generated `terraform-provider-opc` executable to your `.terraformrc` configuration, e.g.
 
 ```
-provider {
+providers {
     opc = "/home/opc/terraform-provider/terraform-provider-opc"
 }
 ```
