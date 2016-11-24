@@ -54,7 +54,7 @@ computed `opcId`.
 
 * `opcId` - (Computed) The interned ID assigned to the instance.
 
-* `sshKeys` - (Optional) The names of the SSH Keys that can be used to log into the instance. 
+* `sshKeys` - (Optional) The names of the SSH Keys that can be used to log into the instance.
 
 * `attributes` - (Optional) An arbitrary JSON-formatted collection of attributes which is made available to the instance.
 
@@ -65,3 +65,4 @@ add it to Security Lists.
 `index`, which is the volume's index in the instance's list of mounted volumes, and `name`, which is the name of the
 storage volume to mount.
 
+* `bootOrder` - (Optional) The index number of the bootable storage volume that should be used to boot the instance. e.g. `[ 1 ]`.  If you specify both `bootOrder` and `imageList`, the imagelist attribute is ignored.

@@ -23,14 +23,23 @@ func (c *AuthenticatedClient) Instances() *InstancesClient {
 		}}
 }
 
+// LaunchPlanStorageAttachmentSpec defines a storage attachment to be created on launch
+type LaunchPlanStorageAttachmentSpec struct {
+	Index  int    `json:"index"`
+	Volume string `json:"volume"`
+}
+
+
 // InstanceSpec defines an instance to be created.
 type InstanceSpec struct {
-	Shape      string                 `json:"shape"`
-	ImageList  string                 `json:"imagelist"`
-	Name       string                 `json:"name"`
-	Label      string                 `json:"label"`
-	SSHKeys    []string               `json:"sshkeys"`
-	Attributes map[string]interface{} `json:"attributes"`
+	Shape      string                            `json:"shape"`
+	ImageList  string                            `json:"imagelist"`
+	Name       string                            `json:"name"`
+	Label      string                            `json:"label"`
+	Storage    []LaunchPlanStorageAttachmentSpec `json:"storage_attachments"`
+	BootOrder  []int                             `json:"boot_order"`
+	SSHKeys    []string                          `json:"sshkeys"`
+	Attributes map[string]interface{}            `json:"attributes"`
 }
 
 // LaunchPlan defines a launch plan, used to launch instances with the supplied InstanceSpec(s)
@@ -45,6 +54,7 @@ type InstanceInfo struct {
 	ImageList   string                 `json:"imagelist"`
 	Name        string                 `json:"name"`
 	Label       string                 `json:"label"`
+	BootOrder   []int                  `json:"boot_order"`
 	SSHKeys     []string               `json:"sshkeys"`
 	State       string                 `json:"state"`
 	ErrorReason string                 `json:"error_reason"`
@@ -88,10 +98,18 @@ func InstanceNameFromString(instanceNameString string) *InstanceName {
 }
 
 // LaunchInstance creates and submits a LaunchPlan to launch a new instance.
-func (c *InstancesClient) LaunchInstance(name, label, shape, imageList string, sshkeys []string, attributes map[string]interface{}) (*InstanceName, error) {
+func (c *InstancesClient) LaunchInstance(name, label, shape, imageList string, storageAttachments []LaunchPlanStorageAttachmentSpec, bootOrder []int, sshkeys []string, attributes map[string]interface{}) (*InstanceName, error) {
 	qualifiedSSHKeys := []string{}
 	for _, key := range sshkeys {
 		qualifiedSSHKeys = append(qualifiedSSHKeys, c.getQualifiedName(key))
+	}
+
+	qualifiedStorageAttachements := []LaunchPlanStorageAttachmentSpec{}
+	for _, attachment := range storageAttachments {
+		qualifiedStorageAttachements = append(qualifiedStorageAttachements, LaunchPlanStorageAttachmentSpec{
+			Index:   attachment.Index,
+			Volume:  c.getQualifiedName(attachment.Volume),
+		})
 	}
 
 	plan := LaunchPlan{Instances: []InstanceSpec{
@@ -99,6 +117,8 @@ func (c *InstancesClient) LaunchInstance(name, label, shape, imageList string, s
 			Name:       fmt.Sprintf("%s/%s", c.computeUserName(), name),
 			Shape:      shape,
 			ImageList:  imageList,
+			Storage:    qualifiedStorageAttachements,
+			BootOrder:  bootOrder,
 			Label:      label,
 			SSHKeys:    qualifiedSSHKeys,
 			Attributes: attributes,

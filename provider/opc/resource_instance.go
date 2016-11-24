@@ -93,6 +93,13 @@ func resourceInstance() *schema.Resource {
 					},
 				},
 			},
+
+			"bootOrder": {
+				Type:     schema.TypeList,
+				Optional: true,
+				ForceNew: true,
+				Elem:     &schema.Schema{Type: schema.TypeInt},
+			},
 		},
 	}
 }
@@ -118,17 +125,19 @@ func resourceInstanceCreate(d *schema.ResourceData, meta interface{}) error {
 	shape := d.Get("shape").(string)
 	imageList := d.Get("imageList").(string)
 	label := d.Get("label").(string)
+	storage := getStorageAttachments(d)
 	sshKeys := getSSHKeys(d)
+	bootOrder := getBootOrder(d)
 
 	attrs, err := getAttrs(d)
 	if err != nil {
 		return err
 	}
 
-	log.Printf("[DEBUG] Creating instance with name %s, shape %s, imageList %s, label %s, sshKeys %s, attrs %#v",
-		name, shape, imageList, label, sshKeys, attrs)
+	log.Printf("[DEBUG] Creating instance with name %s, shape %s, imageList %s, storage %s, bootOrder %s, label %s, sshKeys %s, attrs %#v",
+		name, shape, imageList, storage, bootOrder, label, sshKeys, attrs)
 
-	id, err := client.LaunchInstance(name, label, shape, imageList, sshKeys, *attrs)
+	id, err := client.LaunchInstance(name, label, shape, imageList, storage, bootOrder, sshKeys, *attrs)
 	if err != nil {
 		return fmt.Errorf("Error creating instance %s: %s", name, err)
 	}
@@ -189,10 +198,32 @@ func getSSHKeys(d *schema.ResourceData) []string {
 	return sshKeys
 }
 
+func getBootOrder(d *schema.ResourceData) []int {
+	bootOrder := []int{}
+	for _, i := range d.Get("bootOrder").([]interface{}) {
+		bootOrder = append(bootOrder, i.(int))
+	}
+	return bootOrder
+}
+
+func getStorageAttachments(d *schema.ResourceData) []compute.LaunchPlanStorageAttachmentSpec {
+	storageAttachments := []compute.LaunchPlanStorageAttachmentSpec{}
+	storage := d.Get("storage").(*schema.Set)
+	for _, i := range storage.List() {
+		attrs := i.(map[string]interface{})
+		storageAttachments = append(storageAttachments, compute.LaunchPlanStorageAttachmentSpec{
+			Index: attrs["index"].(int),
+			Volume: attrs["volume"].(string),
+		})
+	}
+	return storageAttachments
+}
+
 func updateInstanceResourceData(d *schema.ResourceData, info *compute.InstanceInfo) error {
 	d.Set("name", info.Name)
 	d.Set("opcId", info.ID)
 	d.Set("imageList", info.ImageList)
+	d.Set("bootOrder", info.BootOrder)
 	d.Set("sshKeys", info.SSHKeys)
 	d.Set("label", info.Label)
 	d.Set("ip", info.IPAddress)

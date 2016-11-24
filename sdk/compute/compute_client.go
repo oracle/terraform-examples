@@ -46,7 +46,7 @@ func NewComputeClient(identityDomain, userName, password string, apiEndpoint *ur
 
 // GetObjectName returns the fully-qualified name of an OPC object, e.g. /identity-domain/user@email/{name}
 func (c *Client) getQualifiedName(name string) string {
-	if strings.HasPrefix(name, "/oracle") {
+	if strings.HasPrefix(name, "/oracle") || strings.HasPrefix(name, "/Compute-") {
 		return name
 	}
 	return fmt.Sprintf("%s/%s", c.computeUserName(), name)
