@@ -22,6 +22,7 @@ Fetch the soruce and build the provider.
 
 ```sh
 $ go get -d github.com/oracle/terraform/provider
+$ (cd src/github.com/hashicorp/terraform/ ; git checkout maint-0.7)
 $ go build -o terraform-provider-opc github.com/oracle/terraform/provider
 ```
 
