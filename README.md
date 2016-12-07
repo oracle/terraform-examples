@@ -1,6 +1,8 @@
 Terraform Provider for Oracle Compute Cloud
 ===========================================
 
+PLEASE NOTE: This repository location has changed from github.com/oracle/terraform to [github.com/oracle/terraform-provider-compute](https://github.com/oracle/terraform-provider-compute/)
+
 Requirements
 ------------
 
@@ -21,15 +23,15 @@ $ cd $GOPATH
 Fetch the soruce and build the provider.
 
 ```sh
-$ go get -d github.com/oracle/terraform/provider
+$ go get -d github.com/oracle/terraform-provider-compute/provider
 $ (cd src/github.com/hashicorp/terraform/ ; git checkout maint-0.7)
-$ go build -o terraform-provider-opc github.com/oracle/terraform/provider
+$ go build -o terraform-provider-opc github.com/oracle/terraform-provider-compute/provider
 ```
 
 Usage
 -----
 
-Add the generated `terraform-provider-opc` executable to your `.terraformrc` configuration, e.g.
+Add the generated `terraform-provider-opc` executable to your `.terraformrc` configuration (`%APPDATA%/terraform.rc` on Windows), e.g.
 
 ```
 providers {
@@ -49,7 +51,7 @@ To authenticate with the Oracle Compute Cloud the provider will prompt for the r
 An example [`test.tf`](test/test.tf) is provided that demonstatates the basic usage of the Oracle Compute Cloud Terraform Provider.
 
 ```sh
-$ cd $GOPATH/src/github.com/oracle/terraform/test
+$ cd $GOPATH/src/github.com/oracle/terraform-provider-compute/test
 $ terraform plan
 $ terraform apply
 $ terraform destroy
@@ -61,6 +63,6 @@ Running the Integration Tests
 An Oracle Compute Cloud Account is required to run the integration tests. The `OCP_*` variables must have been exported
 
 ```sh
-$ cd $GOPATH/src/github.com/oracle/terraform/sdk/compute
+$ cd $GOPATH/src/github.com/oracle/terraform-provider-compute/sdk/compute
 $ go test
 ```
