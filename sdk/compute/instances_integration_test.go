@@ -15,7 +15,7 @@ func TestInstanceLifecycle(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	createdInstanceName, err = svc.LaunchInstance("test", "test", "oc3", "/oracle/public/oel_6.4_2GB_v1", []string{},
+	createdInstanceName, err = svc.LaunchInstance("test", "test", "oc3", "/oracle/public/oel_6.4_2GB_v1", nil, nil, []string{},
 		map[string]interface{}{
 			"attr1": 12,
 			"attr2": map[string]interface{}{

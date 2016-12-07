@@ -52,7 +52,7 @@ func TestInstanceClient_CreateInstance(t *testing.T) {
 	defer server.Close()
 	iv := getStubInstancesClient(server)
 
-	id, err := iv.LaunchInstance("name", "label", "shape", "imagelist", []string{"foo", "bar"}, map[string]interface{}{
+	id, err := iv.LaunchInstance("name", "label", "shape", "imagelist", nil, nil, []string{"foo", "bar"}, map[string]interface{}{
 		"attr1": 12,
 		"attr2": map[string]interface{}{
 			"inner_attr1": "foo",
