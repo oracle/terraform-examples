@@ -20,7 +20,7 @@ $ export GOPATH=/home/opc/terraform-provider
 $ cd $GOPATH
 ```
 
-Fetch the soruce and build the provider.
+Fetch the source and build the provider.
 
 ```sh
 $ go get -d github.com/oracle/terraform-provider-compute/provider
