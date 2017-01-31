@@ -65,3 +65,26 @@ An Oracle Compute Cloud Account is required to run the integration tests. The `O
 $ cd $GOPATH/src/github.com/oracle/terraform-provider-compute/sdk/compute
 $ go test
 ```
+
+Common build issues
+-------------------
+
+The following build issue can occur if you have an older version of the terraform executable installed.
+
+```
+Error configuring: 1 error(s) occurred:
+
+* Incompatible API version with plugin. Plugin version: 3, Ours: 2
+```
+
+To build the provider plugin against a specific terraform version, checkout the version in the `$GOPATH/src/github.com/hashicorp/terraform` source directory and rebuild. e.g.
+
+```sh
+$ terraform --version
+Terraform v0.8.5
+
+$ ( cd $GOPATH/src/github.com/hashicorp/terraform && git checkout v0.8.5 )
+$ go build -o terraform-provider-opc github.com/oracle/terraform-provider-compute/provider
+```
+
+To revert back to building againt the latest source change the git checkout statement to `git checkout master`
