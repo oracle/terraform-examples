@@ -45,6 +45,17 @@ To authenticate with the Oracle Compute Cloud the provider will prompt for the r
 -	`OPC_PASSWORD` - Password for Oracle Public Cloud
 -	`OPC_IDENTITY_DOMAIN` - Identity domain for Oracle Public Cloud
 
+or directly in the terraform configuration:
+
+```
+provider "opc" {
+  user = "xxxx@xxx"
+  password = "xxxx"
+  identityDomain = "xxxx"
+  endpoint = "https://api-z13.compute.em2.oraclecloud.com/"
+}
+```
+
 ### Example Terraform configuration
 
 An example [`test.tf`](test/test.tf) is provided that demonstatates the basic usage of the Oracle Compute Cloud Terraform Provider.
