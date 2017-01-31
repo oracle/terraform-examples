@@ -2,7 +2,7 @@ package opc
 
 import (
 	"fmt"
-	"github.com/oracle/terraform/sdk/compute"
+	"github.com/oracle/terraform-provider-compute/sdk/compute"
 	"net/url"
 )
 

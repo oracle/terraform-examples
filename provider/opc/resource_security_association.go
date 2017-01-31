@@ -3,7 +3,7 @@ package opc
 import (
 	"fmt"
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/oracle/terraform/sdk/compute"
+	"github.com/oracle/terraform-provider-compute/sdk/compute"
 	"log"
 )
 

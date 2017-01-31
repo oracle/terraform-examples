@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/hashicorp/terraform/plugin"
-	"github.com/oracle/terraform/provider/opc"
+	"github.com/oracle/terraform-provider-compute/provider/opc"
 )
 
 func main() {
