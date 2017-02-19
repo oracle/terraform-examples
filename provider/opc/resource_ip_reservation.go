@@ -33,12 +33,12 @@ func resourceIPReservation() *schema.Resource {
 			},
 
 			"tags": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				ForceNew: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
-			
+
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: false,
@@ -98,11 +98,7 @@ func resourceIPReservationRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func getIPReservationResourceData(d *schema.ResourceData) (string, bool, []string) {
-	tagdata := d.Get("tags").([]interface{})
-	tags := make([]string, len(tagdata))
-	for i, tag := range tagdata {
-		tags[i] = tag.(string)
-	}
+	tags := getTags(d)
 	return d.Get("parentpool").(string),
 		d.Get("permanent").(bool),
 		tags

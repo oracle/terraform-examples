@@ -34,6 +34,14 @@ resource "opc_compute_instance" "test_instance" {
        		index = 2
        		volume = "${opc_compute_storage_volume.test_volume2.name}"
        	}]
+       	networking = [ {
+       		index = 0
+       		nat = "ipreservation:${opc_compute_ip_reservation.reservation1.name}"
+       	},{
+       		index = 1
+       		ipnetwork = "${opc_compute_ip_network.ip-network-2.name}"
+       		ip = "192.168.3.16"
+       	}]
 }
 ```
 
@@ -49,6 +57,8 @@ computed `opcId`.
 * `imageList` - (Optional) The imageList of the instance, e.g. `/oracle/public/oel_6.4_2GB_v1`
 
 * `label` - (Optional) The label to apply to the instance.
+
+* `hostname` - (Optional) The hostname to apply to the instance.
 
 * `ip` - (Computed) The internal IP address assigned to the instance.
 
@@ -66,3 +76,15 @@ add it to Security Lists.
 storage volume to mount.
 
 * `bootOrder` - (Optional) The index number of the bootable storage volume that should be used to boot the instance. e.g. `[ 1 ]`.  If you specify both `bootOrder` and `imageList`, the imagelist attribute is ignored.
+
+* `networking` - (Optional) A set of zero of more network interfaces to enable on the instance.  
+
+  * `index` (Required) Tepresents the interface index on the instance. e.g `1` for `eth1`.
+
+  * `ipnetwork` (Optional) the [opc_compute_ip_network](opc_compute_ip_network.html.markdown) to associate the interface with. If omitted the interfaces defaults the shared private network.
+
+  * `ip` (Optional) set the static IP address for an interfaces in an IP network. This attribute is ignored if `ipnetwork` is not set.
+
+  * `mac` (Optional) set MAC address for an interfaces in a ip network. This attribute is ignored if `ipnetwork` is not set.
+
+  * `nat` (Optional) For interfaces on the shared network, associate the private IP to a public IP reservation

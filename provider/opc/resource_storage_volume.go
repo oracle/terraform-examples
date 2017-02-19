@@ -47,7 +47,7 @@ func resourceStorageVolume() *schema.Resource {
 			},
 
 			"tags": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				ForceNew: false,
 				Elem:     &schema.Schema{Type: schema.TypeString},
@@ -184,12 +184,14 @@ func resourceStorageVolumeCreate(d *schema.ResourceData, meta interface{}) error
 }
 
 func getTags(d *schema.ResourceData) []string {
+	tagdata := d.Get("tags").(*schema.Set)
 	tags := []string{}
-	for _, i := range d.Get("tags").([]interface{}) {
+	for _, i := range tagdata.List() {
 		tags = append(tags, i.(string))
 	}
 	return tags
 }
+
 
 func updateResourceData(d *schema.ResourceData, info *compute.StorageVolumeInfo) error {
 	d.Set("name", info.Name)

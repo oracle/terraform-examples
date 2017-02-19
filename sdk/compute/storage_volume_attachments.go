@@ -111,7 +111,7 @@ func (c *StorageAttachmentsClient) GetStorageAttachmentsForInstance(name *Instan
 	)
 }
 
-// GetStorageAttachmentsForInstance retrieves all of the storage attachments for the given volume.
+// GetStorageAttachmentsForVolume retrieves all of the storage attachments for the given volume.
 func (c *StorageAttachmentsClient) GetStorageAttachmentsForVolume(name string) (*[]StorageAttachmentInfo, error) {
 	return c.getStorageAttachments(
 		fmt.Sprintf("storage_volume_name=%s", c.getQualifiedName(name)),

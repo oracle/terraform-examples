@@ -39,6 +39,12 @@ func resourceInstance() *schema.Resource {
 				ForceNew: true,
 			},
 
+			"hostname": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"ip": {
 				Type:     schema.TypeString,
 				Optional: false,
@@ -100,6 +106,41 @@ func resourceInstance() *schema.Resource {
 				ForceNew: true,
 				Elem:     &schema.Schema{Type: schema.TypeInt},
 			},
+
+			"networking": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				ForceNew: true,
+				Elem:     &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"index": {
+							Type:	    schema.TypeInt,
+							Required: true,
+							ForceNew: true,
+						},
+						"ipnetwork": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"nat": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"ip": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+						"mac": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -125,19 +166,21 @@ func resourceInstanceCreate(d *schema.ResourceData, meta interface{}) error {
 	shape := d.Get("shape").(string)
 	imageList := d.Get("imageList").(string)
 	label := d.Get("label").(string)
+	hostname := d.Get("hostname").(string)
 	storage := getStorageAttachments(d)
 	sshKeys := getSSHKeys(d)
 	bootOrder := getBootOrder(d)
+	networking := getNetworking(d)
 
 	attrs, err := getAttrs(d)
 	if err != nil {
 		return err
 	}
 
-	log.Printf("[DEBUG] Creating instance with name %s, shape %s, imageList %s, storage %s, bootOrder %s, label %s, sshKeys %s, attrs %#v",
+	log.Printf("[DEBUG] Creating instance with name %s, shape %s, imageList %s, storage %#v, bootOrder %d, label %s, sshKeys %s, attrs %#v",
 		name, shape, imageList, storage, bootOrder, label, sshKeys, attrs)
 
-	id, err := client.LaunchInstance(name, label, shape, imageList, storage, bootOrder, sshKeys, *attrs)
+	id, err := client.LaunchInstance(name, label, hostname, shape, imageList, storage, bootOrder, networking, sshKeys, *attrs)
 	if err != nil {
 		return fmt.Errorf("Error creating instance %s: %s", name, err)
 	}
@@ -219,6 +262,43 @@ func getStorageAttachments(d *schema.ResourceData) []compute.LaunchPlanStorageAt
 	return storageAttachments
 }
 
+func getNetworking(d *schema.ResourceData) map[string]compute.LaunchPlanNetworkingSpec {
+	lp := map[string]compute.LaunchPlanNetworkingSpec{}
+	networking := d.Get("networking").(*schema.Set)
+	for _, i := range networking.List() {
+		attrs := i.(map[string]interface{})
+		ethPort := fmt.Sprintf("eth%d", attrs["index"])
+		if ipnetwork, ok := attrs["ipnetwork"]; ok {
+			// ip networks
+			lp[ethPort] = compute.LaunchPlanNetworkingSpec{
+				IPNetwork: ipnetwork.(string),
+				IPAddress: attrs["ip"].(string),
+				MACAddress: attrs["mac"].(string),
+				// Vnic: attrs["vnic"]
+				// VnicSets: attrs["vnicsets"]
+			}
+		} else if seclists, ok := attrs["seclists"]; ok {
+			// shared networks
+			lp[ethPort] = compute.LaunchPlanNetworkingSpec{
+				SecurityLists: seclists.([]string),
+			}
+		} else {
+			// if ipnetwork or seclists is not set then the interface
+			// defaults to shared networking
+		}
+		// common
+		if nat, ok := attrs["nat"]; ok {
+			port := lp[ethPort]
+			port.Nat = nat.(string)
+			lp[ethPort] = port
+		}
+		// lp[ethPort].Dns = attrs["dns"]
+		// lp[ethPort].NameServers = attrs["name_servers"]
+		// lp[ethPort].SearchDomains = attrs["search_domains"]
+	}
+	return lp
+}
+
 func updateInstanceResourceData(d *schema.ResourceData, info *compute.InstanceInfo) error {
 	d.Set("name", info.Name)
 	d.Set("opcId", info.ID)
@@ -226,9 +306,10 @@ func updateInstanceResourceData(d *schema.ResourceData, info *compute.InstanceIn
 	d.Set("bootOrder", info.BootOrder)
 	d.Set("sshKeys", info.SSHKeys)
 	d.Set("label", info.Label)
+	d.Set("hostname", info.Hostname)
 	d.Set("ip", info.IPAddress)
 	d.Set("vcable", info.VCableID)
-
+	// TODO update networking info
 	return nil
 }
 

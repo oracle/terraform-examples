@@ -56,6 +56,10 @@ func Provider() terraform.ResourceProvider {
 			"opc_compute_ip_association":       resourceIPAssociation(),
 			"opc_compute_security_rule":        resourceSecurityRule(),
 			"opc_compute_security_association": resourceSecurityAssociation(),
+			"opc_compute_ip_network":           resourceIPNetwork(),
+			"opc_compute_ip_network_exchange":  resourceIPNetworkExchange(),
+			"opc_compute_virtual_nic_set":      resourceVirtualNicSet(),
+			"opc_compute_ip_route":             resourceIPRoute(),
 		},
 
 		ConfigureFunc: providerConfigure,

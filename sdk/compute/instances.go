@@ -29,17 +29,35 @@ type LaunchPlanStorageAttachmentSpec struct {
 	Volume string `json:"volume"`
 }
 
+// LaunchPlanNetworkingSpec defines a set of network interfaces to be configured on launch
+type LaunchPlanNetworkingSpec struct {
+	// shared network
+	SecurityLists []string `json:"seclists,omitempty"`
+	// ip networks
+	IPNetwork     string   `json:"ipnetwork,omitempty"`
+	IPAddress     string   `json:"ip,omitempty"`
+	MACAddress    string   `json:"address,omitempty"`
+	Vnic          string   `json:"vnic,omitempty"`
+	VnicSets      []string `json:"vnicsets,omitempty"`
+	// common
+	Nat           string   `json:"nat,omitempty"`
+	DNS           string   `json:"dns,omitempty"`
+	NameServers   []string `json:"name_servers,omitempty"`
+	SearchDomains []string `json:"search_domains,omitempty"`
+}
 
 // InstanceSpec defines an instance to be created.
 type InstanceSpec struct {
-	Shape      string                            `json:"shape"`
-	ImageList  string                            `json:"imagelist"`
-	Name       string                            `json:"name"`
-	Label      string                            `json:"label"`
-	Storage    []LaunchPlanStorageAttachmentSpec `json:"storage_attachments"`
-	BootOrder  []int                             `json:"boot_order"`
-	SSHKeys    []string                          `json:"sshkeys"`
-	Attributes map[string]interface{}            `json:"attributes"`
+	Shape      string                              `json:"shape"`
+	ImageList  string                              `json:"imagelist"`
+	Name       string                              `json:"name"`
+	Label      string                              `json:"label"`
+	Hostname   string                              `json:"hostname,omitempty"`
+	Storage    []LaunchPlanStorageAttachmentSpec   `json:"storage_attachments"`
+	BootOrder  []int                               `json:"boot_order"`
+	SSHKeys    []string                            `json:"sshkeys"`
+	Networking map[string]LaunchPlanNetworkingSpec `json:"networking"`
+	Attributes map[string]interface{}              `json:"attributes"`
 }
 
 // LaunchPlan defines a launch plan, used to launch instances with the supplied InstanceSpec(s)
@@ -54,6 +72,7 @@ type InstanceInfo struct {
 	ImageList   string                 `json:"imagelist"`
 	Name        string                 `json:"name"`
 	Label       string                 `json:"label"`
+	Hostname    string                 `json:"hostname"`
 	BootOrder   []int                  `json:"boot_order"`
 	SSHKeys     []string               `json:"sshkeys"`
 	State       string                 `json:"state"`
@@ -87,6 +106,7 @@ func (n *InstanceName) String() string {
 	return fmt.Sprintf("%s/%s", n.Name, n.ID)
 }
 
+// InstanceNameFromString splits the instance reference to name and id
 func InstanceNameFromString(instanceNameString string) *InstanceName {
 	sections := strings.Split(instanceNameString, "/")
 	name := strings.Join(sections[:len(sections) - 1], "/")
@@ -98,7 +118,11 @@ func InstanceNameFromString(instanceNameString string) *InstanceName {
 }
 
 // LaunchInstance creates and submits a LaunchPlan to launch a new instance.
-func (c *InstancesClient) LaunchInstance(name, label, shape, imageList string, storageAttachments []LaunchPlanStorageAttachmentSpec, bootOrder []int, sshkeys []string, attributes map[string]interface{}) (*InstanceName, error) {
+func (c *InstancesClient) LaunchInstance(name, label, hostname, shape, imageList string,
+		storageAttachments []LaunchPlanStorageAttachmentSpec, bootOrder []int,
+		networking map[string]LaunchPlanNetworkingSpec,
+		sshkeys []string, attributes map[string]interface{}) (*InstanceName, error) {
+
 	qualifiedSSHKeys := []string{}
 	for _, key := range sshkeys {
 		qualifiedSSHKeys = append(qualifiedSSHKeys, c.getQualifiedName(key))
@@ -112,6 +136,16 @@ func (c *InstancesClient) LaunchInstance(name, label, shape, imageList string, s
 		})
 	}
 
+	qualifiedIPNetworks := map[string]LaunchPlanNetworkingSpec{}
+	for k,v := range networking {
+		spec := LaunchPlanNetworkingSpec{}
+		if v.IPNetwork != "" {
+			spec.IPNetwork = c.getQualifiedName(v.IPNetwork)
+			spec.IPAddress = v.IPAddress
+		}
+		qualifiedIPNetworks[k] = spec
+	}
+
 	plan := LaunchPlan{Instances: []InstanceSpec{
 		InstanceSpec{
 			Name:       fmt.Sprintf("%s/%s", c.computeUserName(), name),
@@ -120,7 +154,9 @@ func (c *InstancesClient) LaunchInstance(name, label, shape, imageList string, s
 			Storage:    qualifiedStorageAttachements,
 			BootOrder:  bootOrder,
 			Label:      label,
+			Hostname:   hostname,
 			SSHKeys:    qualifiedSSHKeys,
+			Networking: qualifiedIPNetworks,
 			Attributes: attributes,
 		},
 	}}
