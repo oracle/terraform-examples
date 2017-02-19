@@ -1,7 +1,7 @@
 Terraform Configuration for Windows Server 2012 R2
 ==================================================
 
-This example lauches a single Windows 2012 R2 instance using the image from the Oracle Cloud Marketplace.
+This example lauches a single Windows 2012 R2 instance using the image from the Oracle Cloud Marketplace and enabled Remote Desktop access
 
 -	Launches a new Windows Server 2012 R2 instance `windows-server-1` with an initial Adminstrator password configured.
 -	Creates a new public ip address reservation for the instance.
@@ -13,7 +13,7 @@ Usage
 
 ### Prerequisites
 
-First Install the [Microsoft Windows 2012 R2 image](https://cloud.oracle.com/marketplace/en_US/listing/7055818) from the Oracle Cloud Marketplace to your Oracle Compute Cloud account so the Windows Service image is available in your domain.
+First Install the [Microsoft Windows 2012 R2 image](https://cloud.oracle.com/marketplace/en_US/listing/7055818) from the Oracle Cloud Marketplace to your Oracle Compute Cloud account so the Windows Server image is available in your domain.
 
 Create a `terraform.tfvars` to file to set your environment specific credentials
 
@@ -30,7 +30,7 @@ Where `adminstrator_password` is the initial Windows Administrator password that
 
 ### Apply the configuration
 
-First review the configuration plan of resources that will be created.
+First review the configuration plan of the resources that will be created.
 
 ```
 $ terraform plan
