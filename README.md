@@ -24,6 +24,7 @@ Fetch the source and build the provider.
 
 ```sh
 $ go get -d github.com/oracle/terraform-provider-compute/provider
+$ (cd src/github.com/oracle/terraform-provider-compute/ && git fetch && git checkout ipnetworks-dev)
 $ go build -o terraform-provider-opc github.com/oracle/terraform-provider-compute/provider
 ```
 
