@@ -92,7 +92,7 @@ Error configuring: 1 error(s) occurred:
 * Incompatible API version with plugin. Plugin version: 3, Ours: 2
 ```
 
-To build the provider plugin against a specific terraform version, checkout the version in the `$GOPATH/src/github.com/hashicorp/terraform` source directory and rebuild. e.g.
+To build the provider plugin against a specific terraform version, checkout the version in the `$GOPATH/src/github.com/hashicorp/terraform` source directory and rebuild. Be sure the align the checkout tag with the version of terraform you have installed, e.g for `Terraform v0.8.5` you will need to `git checkout v0.8.5`
 
 ```sh
 $ terraform --version
