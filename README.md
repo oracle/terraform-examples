@@ -3,12 +3,14 @@ Terraform Provider for Oracle Compute Cloud
 
 PLEASE NOTE: This repository location has changed from github.com/oracle/terraform to [github.com/oracle/terraform-provider-compute](https://github.com/oracle/terraform-provider-compute/)
 
+For the Terraform Provider for Oracle Bare Metal Cloud Services go to [github.com/oracle/terraform-provider-baremetal](https://github.com/oracle/terraform-provider-baremetal)
+
 Requirements
 ------------
 
--	[Terraform](https://www.terraform.io/downloads.html) 0.7.x
+-	[Terraform](https://www.terraform.io/downloads.html) 0.7.x or above
 -	[Oracle Compute Cloud](https://cloud.oracle.com/compute) Account
--	[Go](https://golang.org/doc/install) 1.7 (to build the provider plugin)
+-	[Go](https://golang.org/doc/install) 1.7 or above (to build the provider plugin)
 
 Building
 --------
@@ -66,6 +68,8 @@ $ terraform plan
 $ terraform apply
 $ terraform destroy
 ```
+
+Additional examples are in the [examples](./examples) directory.
 
 Running the Integration Tests
 -----------------------------
