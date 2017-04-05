@@ -3,7 +3,7 @@ Single instance with public SSH access
 
 This example lauches a single instance with a public IP address and enables ssh access
 
-This exmaple creates:
+This example creates:
 
 -	a single Oracle Linux instance `example-instance1`
 -	an SSH Key to that will be enabled on the instance `example-sshkey1`
