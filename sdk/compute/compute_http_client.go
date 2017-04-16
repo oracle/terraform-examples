@@ -76,6 +76,7 @@ func (c *apiClient) newPostRequest(path string, body interface{}) (*http.Request
 	}
 
 	req.Header.Set("Content-Type", "application/oracle-compute-v3+json")
+	req.Header.Set("ECID-Context", "") // Temporary workaround launching instance with IPNetwork interface
 
 	return req, nil
 }
