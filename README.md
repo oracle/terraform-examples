@@ -1,16 +1,20 @@
 Terraform Provider for Oracle Compute Cloud
 ===========================================
 
-PLEASE NOTE: This repository location has changed from github.com/oracle/terraform to [github.com/oracle/terraform-provider-compute](https://github.com/oracle/terraform-provider-compute/)
+NOTE: **As of Terraform release 0.9.4 the Oracle Compute Cloud resouce provisioning is supported by the built-in Oracle Public Cloud `opc` provider included in the main Terraform distribution**. See the [Terraform Oracle Public Cloud Provider](https://www.terraform.io/docs/providers/opc/index.html) documentation for more details. 
+
+For Terraform 0.7.x to 0.9.3 the provider **plugin** in this repository is required to provision Oracle Compute Cloud resources. See the details below to build and install the provider plugin.  
+
+All future development and ongoing support will be focused on the **built-in** `opc` provider in Terraform 0.9.4 and above. See the [migration guide](MIGRATION.md) to update existing configurations and deployments to the build-in provider for Terraform 0.9.4
 
 For the Terraform Provider for Oracle Bare Metal Cloud Services go to [github.com/oracle/terraform-provider-baremetal](https://github.com/oracle/terraform-provider-baremetal)
 
 Requirements
 ------------
 
--	[Terraform](https://www.terraform.io/downloads.html) 0.7.x or above
+-	[Terraform](https://www.terraform.io/downloads.html) 0.7.x to 0.9.3
 -	[Oracle Compute Cloud](https://cloud.oracle.com/compute) Account
--	[Go](https://golang.org/doc/install) 1.7 or above (to build the provider plugin)
+-	[Go](https://golang.org/doc/install) 1.8 or above (to build the provider plugin)
 
 Building
 --------
@@ -69,7 +73,7 @@ $ terraform apply
 $ terraform destroy
 ```
 
-Additional examples are in the [examples](./examples) directory.
+Additional examples are in the [examples](./examples/plugin) directory.
 
 Running the Integration Tests
 -----------------------------
