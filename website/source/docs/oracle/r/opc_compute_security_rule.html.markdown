@@ -6,7 +6,7 @@ description: |-
   Creates and manages a security rule in an OPC identity domain.
 ---
 
-# opc\_compute\_ip\_reservation
+# opc\_compute\_security\_rule
 
 The ``opc_compute_security_rule`` resource creates and manages a security rule in an OPC identity domain, which joins
 together a source security list (or security IP list), a destination security list (or security IP list), and a security
