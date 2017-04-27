@@ -74,7 +74,6 @@ resource "opc_compute_instance" "instance-3" {
     index = 0
     shared_network = true
     nat = [ "${opc_compute_ip_reservation.reservation1.name}" ]
-    model = "e1000"
   }
   networking_info {
     index = 1
@@ -94,7 +93,6 @@ resource "opc_compute_instance" "instance-4" {
     index = 0
     shared_network = true
     nat = [ "${opc_compute_ip_reservation.reservation2.name}" ]
-    model = "e1000"
   }
   networking_info {
     index = 1
