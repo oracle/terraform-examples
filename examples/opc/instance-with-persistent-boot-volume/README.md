@@ -6,10 +6,9 @@ This example demonstrates creation of an instance with a persistent (block stora
 The `opc_compute_storage_volume` resource is created from an existing image
 
 ```
-bootable {
-	image_list = "/oracle/public/OL_6.8_UEKR3_x86_64"
-	image_list_entry = 3
-}
+bootable = true
+image_list = "/oracle/public/OL_6.8_UEKR3_x86_64"
+image_list_entry = 3
 ```
 
 The `opc_compute_instance resource` is attached to the bootable storage volume and the `bootOrder` identifies the index of the specific storage attachement to boot from.

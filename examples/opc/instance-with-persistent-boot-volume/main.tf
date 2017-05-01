@@ -9,10 +9,9 @@ resource "opc_compute_storage_volume" "volume1" {
 	size = "12"
 	description = "Example bootable storage volume"
 	name = "boot-from-storage-example"
-	bootable {
-		image_list = "/oracle/public/OL_6.8_UEKR3_x86_64"
-		image_list_entry = 3
-	}
+	bootable = true
+	image_list = "/oracle/public/OL_6.8_UEKR3_x86_64"
+	image_list_entry = 3
 }
 
 resource "opc_compute_storage_volume" "volume2" {

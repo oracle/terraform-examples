@@ -30,29 +30,30 @@ You will also need to remove the `opc` entry for the provider plugin from your `
 
 Several resource attribute names have been updated from camelCase to under_score format for consistent syntax styling.
 
-| Resource                     | Old Attribute name | New Attribute name    |
-|:-----------------------------|:-------------------|:----------------------|
-| `opc_compute_instance`       | `imageList`        | `image_list`          |
-| `opc_compute_instance`       | `sshKeys`          | `ssh_keys`            |
-| `opc_compute_instance`       | `attributes`       | `instance_attributes` |
-| `opc_compute_ip_association` | `parentpool`       | `parent_pool`         |
-| `opc_compute_ip_reservation` | `parentpool`       | `parent_pool`         |
+| Resource                     | Old Attribute name     | New Attribute name       |
+|:-----------------------------|:-----------------------|:-------------------------|
+| `opc_compute_instance`       | `imageList`            | `image_list`             |
+| `opc_compute_instance`       | `sshKeys`              | `ssh_keys`               |
+| `opc_compute_instance`       | `attributes`           | `instance_attributes`    |
+| `opc_compute_ip_association` | `parentpool`           | `parent_pool`            |
+| `opc_compute_ip_reservation` | `parentpool`           | `parent_pool`            |
+| `opc_compute_storage_volume` | `bootableImage`        | `bootable_image`         |
+| `opc_compute_storage_volume` | `bootableImageVersion` | `bootable_image_version` |
 
 #### Storage Volume resource changes
 
 The storage `size` no longer uses the `g` suffix, size is always declared in gigabytes.
 
-The `bootableImage` and `bootableImageVersion` attributes have been replaced with a `bootable` block definiton within the resource.
+The `bootable` attribute has been added.
 
 ```
 resource "opc_compute_storage_volume" "volume1" {
     size = "12"
     description = "Example bootable storage volume"
     name = "boot-from-storage-example"
-    bootable {
-        image_list = "/oracle/public/OL_6.8_UEKR3_x86_64"
-        image_list_entry = 3
-    }
+    bootable = true
+    image_list = "/oracle/public/OL_6.8_UEKR3_x86_64"
+    image_list_entry = 3
 }
 ```
 
