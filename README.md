@@ -1,11 +1,13 @@
 Terraform Provider for Oracle Compute Cloud
 ===========================================
 
-NOTE: **As of Terraform release 0.9.4 the Oracle Compute Cloud resouce provisioning is supported by the built-in Oracle Public Cloud `opc` provider included in the main Terraform distribution**. See the [Terraform Oracle Public Cloud Provider](https://www.terraform.io/docs/providers/opc/index.html) documentation for more details. 
+**THE PROVIDER PLUGIN IMPLEMENTATION IN THIS REPOSITORY IS DEPRECATED**
 
-For Terraform 0.7.x to 0.9.3 the provider **plugin** in this repository is required to provision Oracle Compute Cloud resources. See the details below to build and install the provider plugin.  
+**For Terraform release 0.9.4 and onwards the Oracle Compute Cloud resouce provisioning is supported by the built-in Oracle Public Cloud `opc` provider included in the main Terraform distribution**. See the [Terraform Oracle Public Cloud Provider](https://www.terraform.io/docs/providers/opc/index.html) documentation for more details.
 
-All future development and ongoing support will be focused on the **built-in** `opc` provider in Terraform 0.9.4 and above. See the [migration guide](MIGRATION.md) to update existing configurations and deployments to the build-in provider for Terraform 0.9.4
+**All future development and ongoing support for the built-in `opc` provider is at https://github.com/terraform-providers/terraform-provider-opc*** 
+
+If you are still using Terraform 0.7.x to 0.9.3 the provider **plugin** in this repository is required to provision Oracle Compute Cloud resources. See the details below to build and install the provider plugin.  See the [migration guide](MIGRATION.md) to update existing configurations and deployments to the build-in provider for Terraform 0.9.4+
 
 For the Terraform Provider for Oracle Bare Metal Cloud Services go to [github.com/oracle/terraform-provider-baremetal](https://github.com/oracle/terraform-provider-baremetal)
 
