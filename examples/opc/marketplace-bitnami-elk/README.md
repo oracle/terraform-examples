@@ -8,11 +8,11 @@ Prerequisites
 
 ### Enable the Bitnami ELK image
 
-The Bitnami ELK image must first be enabled in your domain. Go the [ELK on OL 6.7](https://cloudmarketplace.oracle.com/marketplace/en_US/listing/12324385) Oracle Cloud Marketplace listing and select **Get App**. Select the target Compute domain, accept the Terms and Conditions, and select **Install**. When you get the *Application Successfully Installed* confirmation proceed with the steps below.
+The Bitnami ELK image must first be enabled in your domain. Go to the [ELK on OL 6.7](https://cloudmarketplace.oracle.com/marketplace/en_US/listing/12324385) Oracle Cloud Marketplace listing and select **Get App**. Select the target Compute domain, accept the Terms and Conditions, and select **Install**. When you get the *Application Successfully Installed* confirmation proceed with the steps below.
 
 ### Create the local Terraform variables file (Optional)
 
-Create a local file called `terraform.tfvars` which sets the required attributes for provider. If these variables are not set then Terraform will prompt for the values on each run.
+Create a local file called `terraform.tfvars` which sets the required attributes for provisioning with the Terraform provider. If these variables are not set in the local tfvars file then Terraform will prompt for the values on each run.
 
 ```
 domain = "mydomain"
@@ -29,18 +29,18 @@ To generate ssh keys used to configure and access the instance run:
 $ ssh-keygen -f ./id_rsa -N '' -q
 ```
 
-or set the `ssh_public_key_file` and `ssh_private_key_file` variables to the location of desired the ssh key files in the `terraform.tfvars`
+or set the `ssh_public_key_file` and `ssh_private_key_file` variables in the `terraform.tfvars` file to the location of the ssh key files to use
 
 Create the ELK Instance
 -----------------------
 
-Test the Terraform configuration and review provisioning plan
+Test the Terraform configuration and review the provisioning plan
 
 ```
 $ terraform plan
 ```
 
-Apply the configuration to create the ELK stack instance run
+Apply the configuration to create the ELK stack instance
 
 ```
 $ terraform apply
@@ -60,7 +60,7 @@ This Terraform configuration creates the following resources:
 
 Terraform provisioners are used to configure the instance. The sample configuration used is based on the [Getting Started With Bitnami ELK Stack](https://docs.bitnami.com/oracle/apps/elk/) example.
 
-When the Terraform provisioning is complete the output log will show the initial generated password for the elk web login (default user is `user`). The ELK web URL and SSH access commands are also output for convenience.
+When the Terraform provisioning is complete the output log will show the initial generated password for the ELK web login (default user is `user`). The ELK web URL and SSH access commands are also output for convenience.
 
 ```
 opc_compute_instance.elk (remote-exec): Monitored logstash
