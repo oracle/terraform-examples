@@ -1,4 +1,3 @@
-
 variable "trigger" {}
 variable "public_ip" {}
 variable "ssh_private_key" {}
@@ -10,17 +9,20 @@ resource "null_resource" "install_ssh_keys" {
   triggers {
     compute_instance = "${var.trigger}"
   }
+
   connection {
-    type = "ssh"
-    host = "${var.public_ip}"
+    type        = "ssh"
+    host        = "${var.public_ip}"
     private_key = "${file(var.ssh_private_key)}"
-    user  = "${var.ssh_user}"
-    timeout = "5m"
+    user        = "${var.ssh_user}"
+    timeout     = "5m"
   }
+
   provisioner "file" {
-    source = "${var.ssh_private_key}"
+    source      = "${var.ssh_private_key}"
     destination = "./.ssh/id_rsa"
   }
+
   provisioner "remote-exec" {
     inline = [
       "chmod go-r ~/.ssh/id_rsa",

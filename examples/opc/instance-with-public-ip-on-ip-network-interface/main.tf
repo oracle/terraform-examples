@@ -6,8 +6,8 @@ provider "opc" {
 }
 
 resource "opc_compute_ssh_key" "my-ssh-key" {
-  name = "my-ssh-key"
-  key = "${file(var.public_ssh_key)}"
+  name    = "my-ssh-key"
+  key     = "${file(var.public_ssh_key)}"
   enabled = true
 }
 
@@ -17,12 +17,12 @@ resource "opc_compute_ip_address_reservation" "my-ip-address" {
 }
 
 resource "opc_compute_ip_network" "my-ip-network" {
-  name                = "my-ip-network"
-  ip_address_prefix   = "192.168.1.0/24"
+  name              = "my-ip-network"
+  ip_address_prefix = "192.168.1.0/24"
 }
 
 resource "opc_compute_acl" "my-acl" {
-  name        = "my-acl"
+  name = "my-acl"
 }
 
 resource "opc_compute_security_rule" "ssh" {
@@ -57,20 +57,22 @@ resource "opc_compute_vnic_set" "my-vnic-set" {
 }
 
 resource "opc_compute_instance" "my-instance" {
-	name = "my-instance"
-	hostname = "my-instance"
-	label = "my-instance"
-	shape = "oc3"
-	image_list = "/oracle/public/OL_7.2_UEKR4_x86_64"
+  name       = "my-instance"
+  hostname   = "my-instance"
+  label      = "my-instance"
+  shape      = "oc3"
+  image_list = "/oracle/public/OL_7.2_UEKR4_x86_64"
+
   networking_info {
-    index = 0
+    index      = 0
     ip_network = "${opc_compute_ip_network.my-ip-network.name}"
     ip_address = "192.168.1.100"
-    vnic = "my-instance_eth0"
-    vnic_sets = [ "${opc_compute_vnic_set.my-vnic-set.name}"]
-    nat = [ "${opc_compute_ip_address_reservation.my-ip-address.name}" ]
+    vnic       = "my-instance_eth0"
+    vnic_sets  = ["${opc_compute_vnic_set.my-vnic-set.name}"]
+    nat        = ["${opc_compute_ip_address_reservation.my-ip-address.name}"]
   }
-  ssh_keys = [ "${opc_compute_ssh_key.my-ssh-key.name}" ]
+
+  ssh_keys = ["${opc_compute_ssh_key.my-ssh-key.name}"]
 }
 
 output "public_ip_address" {

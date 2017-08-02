@@ -21,13 +21,13 @@ variable ssh_private_key_file {
 }
 
 resource "opc_compute_ssh_key" "bitnami-elk" {
-  name = "bitnami-elk-sshkey"
-  key = "${file(var.ssh_public_key_file)}"
+  name    = "bitnami-elk-sshkey"
+  key     = "${file(var.ssh_public_key_file)}"
   enabled = true
 }
 
 resource "opc_compute_ip_reservation" "bitnami-elk-public-ip" {
-  name = "bitnami-elk-ip"
+  name        = "bitnami-elk-ip"
   parent_pool = "/oracle/public/ippool"
   permanent   = true
 }
