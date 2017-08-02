@@ -53,6 +53,7 @@ resource "opc_compute_security_protocol" "ssh" {
 resource "opc_compute_vnic_set" "my-vnic-set" {
   name         = "my-vnic-set"
   applied_acls = ["${opc_compute_acl.my-acl.name}"]
+  virtual_nics = ["my-instance_eth0"]
 }
 
 resource "opc_compute_instance" "my-instance" {
