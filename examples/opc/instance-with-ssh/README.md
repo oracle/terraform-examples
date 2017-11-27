@@ -1,13 +1,15 @@
 Single instance with public SSH access
 ======================================
 
-This example lauches a single instance with a public IP address and enables ssh access
+This example launches a single instance with a public IP address and enables ssh access
 
-This exmaple creates:
+This example creates:
 
 -	a single Oracle Linux instance `example-instance1`
 -	an SSH Key to that will be enabled on the instance `example-sshkey1`
--	a public ip reservation
+-	a public ip reservation on the Shared network interface
+- a new security list `example-seclist1` and associates the security list to instances Shared Network interface.
+-	Creates a new `Allow-ssh-access` security rule to allow SSH traffic from the public internet to the `example-seclist1` security list.
 
 Usage
 -----
@@ -35,8 +37,9 @@ $ ssh-keygen -f ./id_rsa -N "" -q
 Check and apply the configuraiton to create the instance
 
 ```
-terraform plan
-terraform apply
+$ terraform init
+$ terraform plan
+$ terraform apply
 ```
 
 Login to the instance once is has fully started.
