@@ -26,15 +26,17 @@ resource "opc_compute_instance" "instance1" {
   shape               = "oc3"
   image_list          = "/Compute-${var.domain}/${var.user}/Microsoft_Windows_Server_2012_R2"
   instance_attributes = "${data.template_file.userdata.rendered}"
+
+  networking_info {
+    index = 0
+    shared_network = true
+    nat = [ "${opc_compute_ip_reservation.ipreservation1.name}" ]
+    sec_lists = [ "${opc_compute_security_list.seclist1.name}" ]
+  }
 }
 
-resource "opc_compute_security_association" "instance1_enable-rdp" {
-  vcable  = "${opc_compute_instance.instance1.vcable}"
-  seclist = "${opc_compute_security_list.enable-rdp.name}"
-}
-
-resource "opc_compute_security_list" "enable-rdp" {
-  name                 = "Enable-RDP-access"
+resource "opc_compute_security_list" "seclist1" {
+  name                 = "windows-seclist1"
   policy               = "DENY"
   outbound_cidr_policy = "PERMIT"
 }
@@ -42,15 +44,10 @@ resource "opc_compute_security_list" "enable-rdp" {
 resource "opc_compute_sec_rule" "allow-rdp" {
   name             = "Allow-rdp-access"
   source_list      = "seciplist:/oracle/public/public-internet"
-  destination_list = "seclist:${opc_compute_security_list.enable-rdp.name}"
+  destination_list = "seclist:${opc_compute_security_list.seclist1.name}"
   action           = "permit"
   application      = "/oracle/public/rdp"
   disabled         = false
-}
-
-resource "opc_compute_ip_association" "instance1_ipreservation" {
-  vcable      = "${opc_compute_instance.instance1.vcable}"
-  parent_pool = "ipreservation:${opc_compute_ip_reservation.ipreservation1.name}"
 }
 
 resource "opc_compute_ip_reservation" "ipreservation1" {

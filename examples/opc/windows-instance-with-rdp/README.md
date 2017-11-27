@@ -3,10 +3,10 @@ Terraform Configuration for Windows Server 2012 R2
 
 This example lauches a single Windows 2012 R2 instance using the image from the Oracle Cloud Marketplace and enabled Remote Desktop access
 
--	Launches a new Windows Server 2012 R2 instance `windows-server-1` with an initial Adminstrator password configured.
--	Creates a new public ip address reservation for the instance.
--	Creates a new security list `Enable-RDP-access` and associates the security list instanace.
--	Creates a new `Allow-rdp-access` security rule to allow RDP traffic from the public internet to the `Enable-RDP-access` security list.
+-	Launches a new Windows Server 2012 R2 instance `windows-server-1` with an initial Administrator password configured.
+-	Creates a new public ip address reservation for the instance on the Shared Network interface
+-	Creates a new security list `windows-seclist1` and associates the security list to the instances Shared Network interface.
+-	Creates a new `Allow-rdp-access` security rule to allow RDP traffic from the public internet to the `windows-seclist1` security list.
 
 Usage
 -----
@@ -33,6 +33,7 @@ Where `adminstrator_password` is the initial Windows Administrator password that
 First review the configuration plan of the resources that will be created.
 
 ```
+$ terraform init
 $ terraform plan
 ```
 
@@ -58,8 +59,8 @@ Login to the remote instance as `\Administrator` using the administrator passwor
 
 To destroy instance and clean-up all the dependent configuration
 
-```sh
-terraform destroy
+```
+$ terraform destroy
 ```
 
 Related Inforamtion
