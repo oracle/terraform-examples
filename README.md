@@ -1,7 +1,7 @@
 Terraform Provider for Oracle Compute Cloud
 ========================================================
 
-**THE PROVIDER PLUGIN IMPLEMENTATION IN THIS REPOSITORY IS __DEPRECATED__**
+**THE PROVIDER PLUGIN IMPLEMENTATION IN THIS REPOSITORY IS DEPRECATED**
 
 **For Terraform release 0.9.4 and onwards the Oracle Compute Cloud resouce provisioning is supported by the built-in Oracle Public Cloud `opc` provider included in the main Terraform distribution**. See the [Terraform Oracle Public Cloud Provider](https://www.terraform.io/docs/providers/opc/index.html) documentation for more details.
 
