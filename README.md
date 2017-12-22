@@ -1,5 +1,5 @@
 Terraform Provider for Oracle Compute Cloud
-===========================================
+========================================================
 
 **THE PROVIDER PLUGIN IMPLEMENTATION IN THIS REPOSITORY IS DEPRECATED**
 
