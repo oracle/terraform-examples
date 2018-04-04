@@ -5,7 +5,7 @@ This configuration creates a new database instance configured for backups.
 
 To deploy the Database Cloud Service Instances on OCI instances you must first create a VCN and Subnet.  This can be created in the UI or using the `oci` Terraform provider. This example includes the VCN configuration.
 
-Before being able to create an instance that is configured with backups you must first follow the sets to Create an Object Storage Bucket for storing the Backup
+Before being able to create an instance that is configured with backups you must first follow the steps to create an Object Storage Bucket for storing the Backups
 (https://docs.us-phoenix-1.oraclecloud.com/Content/General/Reference/PaaSprereqs.htm?Highlight=paas)
 
 See [Prerequisites for Oracle Platform Services on Oracle Cloud Infrastructure](https://docs.us-phoenix-1.oraclecloud.com/Content/General/Reference/PaaSprereqs.htm?Highlight=paas) from more details.
