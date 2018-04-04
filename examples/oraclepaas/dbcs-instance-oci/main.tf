@@ -69,7 +69,7 @@ resource "oraclepaas_database_service_instance" "database" {
   region              = "${var.region}"
   availability_domain = "${local.availability_domain}"
   subnet              = "${oci_core_subnet.subnet.id}"
-  shape               = "VM.Standard1.2"
+  shape               = "VM.Standard2.2"
 
   database_configuration {
     admin_password     = "Pa55_Word"
