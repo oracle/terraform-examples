@@ -3,9 +3,9 @@ Database Service Instance on OCI with Backup Configuration
 
 This configuration creates a new database instance configured for backups.
 
-To deploy the Database Cloud Service Instances on OCI instances you must first create a VCN and Subnet.  This can be created in the UI or using the `oci` Terraform provider. This example includes the VCN configuration.
+To deploy the Database Cloud Service Instances on OCI instances you must first create a VCN and Subnet. This example includes the creation of an example VCN for the database instance deployment
 
-Before being able to create an instance that is configured with backups you must first follow the steps to create an Object Storage Bucket for storing the Backups
+Before being able to create an instance that is configured for backups you must first follow the steps to create an Object Storage Bucket for storing the Backups
 
 - Create a Bucket in OCI Object Storage, e.g. `PaaSBucket`
 - Create a Swift Password for user (e.g. `api.user`)
@@ -37,7 +37,7 @@ object_storage_bucket="PaaSBucket"
 Ensure the shape is a valid OCI shape, and that the tenancy shape is available within the service limits
 
 ```hcl
-shape = "VM.Standard2.2"
+shape = "VM.Standard2.1"
 ```
 For OCI instances the `usable_storage` must be a minimum of 50Gb
 

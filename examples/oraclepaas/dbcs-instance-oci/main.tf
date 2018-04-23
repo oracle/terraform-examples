@@ -69,7 +69,7 @@ resource "oraclepaas_database_service_instance" "database" {
   region              = "${var.region}"
   availability_domain = "${local.availability_domain}"
   subnet              = "${oci_core_subnet.subnet.id}"
-  shape               = "VM.Standard2.2"
+  shape               = "VM.Standard2.1"
 
   database_configuration {
     admin_password     = "Pa55_Word"
@@ -83,4 +83,12 @@ resource "oraclepaas_database_service_instance" "database" {
     cloud_storage_username  = "${var.object_storage_user}"
     cloud_storage_password  = "${var.swift_password}"
   }
+}
+
+output "database_service_name" {
+  value = "${oraclepaas_database_service_instance.database.name}"
+}
+
+output "database_subnet_id" {
+  value = "${oraclepaas_database_service_instance.database.subnet}"
 }
