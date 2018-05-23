@@ -53,7 +53,6 @@ resource "opc_compute_security_protocol" "ssh" {
 resource "opc_compute_vnic_set" "my-vnic-set" {
   name         = "my-vnic-set"
   applied_acls = ["${opc_compute_acl.my-acl.name}"]
-  virtual_nics = ["my-instance_eth0"]
 }
 
 resource "opc_compute_instance" "my-instance" {
@@ -64,12 +63,12 @@ resource "opc_compute_instance" "my-instance" {
   image_list = "/oracle/public/OL_7.2_UEKR4_x86_64"
 
   networking_info {
-    index      = 0
-    ip_network = "${opc_compute_ip_network.my-ip-network.name}"
-    ip_address = "192.168.1.100"
-    vnic       = "my-instance_eth0"
-    vnic_sets  = ["${opc_compute_vnic_set.my-vnic-set.name}"]
-    nat        = ["${opc_compute_ip_address_reservation.my-ip-address.name}"]
+    index              = 0
+    ip_network         = "${opc_compute_ip_network.my-ip-network.name}"
+    ip_address         = "192.168.1.100"
+    is_default_gateway = true
+    vnic_sets          = ["${opc_compute_vnic_set.my-vnic-set.name}"]
+    nat                = ["${opc_compute_ip_address_reservation.my-ip-address.name}"]
   }
 
   ssh_keys = ["${opc_compute_ssh_key.my-ssh-key.name}"]
