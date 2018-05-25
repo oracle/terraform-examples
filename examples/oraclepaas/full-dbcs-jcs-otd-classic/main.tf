@@ -12,8 +12,10 @@ provider "oraclepaas" {
 }
 
 locals {
+  # Java Service name cannot have more than 30 chars; must start with a letter and can contain only letters and numbers.
+  # If the service name contains a hyphen; Oracle-managed load balancer will not be created.
+  java_service_name = "tfjcsdemo"
   database_name     = "my-terraformed-database-demo"
-  java_service_name = "my-terraformed-java-service-demo"
 }
 
 resource "oraclepaas_database_service_instance" "database" {
@@ -46,7 +48,7 @@ resource "oraclepaas_java_service_instance" "jcs" {
   description = "Created by Terraform"
 
   edition              = "EE"
-  service_version      = "12cRelease212"
+  service_version      = "12cRelease213" // 12cRelease213, 12cRelease212, 12cR3, 11gR1
   metering_frequency   = "HOURLY"
   enable_admin_console = true
   notification_email   = "${var.user}"

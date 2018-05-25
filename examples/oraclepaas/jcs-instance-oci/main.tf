@@ -39,7 +39,10 @@ data "terraform_remote_state" "database" {
 }
 
 locals {
-  java_service_name   = "my-terraformed-java-service-oci"
+  # Java Service name cannot have more than 30 chars; must start with a letter and can contain only letters and numbers.
+  # If the service name contains a hyphen; Oracle-managed load balancer will not be created.
+  java_service_name   = "tfjcsoci"
+
   jcs_backup_bucket   = "${var.object_storage_bucket}"
   AD                  = 1
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[local.AD],"name")}"
@@ -55,7 +58,7 @@ resource "oraclepaas_java_service_instance" "jcs" {
   description = "Created by Terraform"
 
   edition                = "EE"            // SE EE SUITE
-  service_version        = "12cRelease212" // 12cRelease212 or 12cR3 or 11gR1
+  service_version        = "12cRelease213" // 12cRelease213, 12cRelease212 12cR3, 11gR1
   metering_frequency     = "HOURLY"        // HOURLY MONTHLY
   bring_your_own_license = true
 
