@@ -1,6 +1,6 @@
 variable user {}
 variable password {}
-variable identity_domain_name { }
+variable identity_domain { }
 variable identity_service_id { }
 variable service_id {}
 variable endpoint {}
@@ -18,7 +18,7 @@ provider "oraclepaas" {
 provider "opc" {
   user              = "${var.user}"
   password          = "${var.password}"
-  identity_domain   = "${var.identity_service_id}"
+  identity_domain   = "${var.service_id}"
   endpoint          = "${var.endpoint}"
 }
 
@@ -60,7 +60,7 @@ resource "oraclepaas_mysql_service_instance" "example" {
   }
 
   backups {
-    cloud_storage_container = "Storage-${var.identity_domain_name}/my-paas-backup"
+    cloud_storage_container = "Storage-${var.identity_domain}/my-paas-backup"
     cloud_storage_username = "${var.user}"
     cloud_storage_password = "${var.password}"
     create_if_missing       = true
