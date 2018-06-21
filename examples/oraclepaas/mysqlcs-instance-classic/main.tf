@@ -48,8 +48,6 @@ resource "oraclepaas_mysql_service_instance" "example" {
     mysql_port      = 3306
     mysql_username  = "root"
     mysql_password  = "Pa55_Word"
-    mysql_charset   = "utf8"
-    mysql_collation = "utf8_general_ci"
 
     enterprise_monitor_configuration {
       em_agent_password = "Pa55_Word"
