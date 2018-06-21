@@ -9,6 +9,7 @@ variable source_ip {}
 
 
 provider "oraclepaas" {
+  version           = "~> 1.2"
   user              = "${var.user}"
   password          = "${var.password}"
   identity_domain   = "${var.identity_service_id}"
