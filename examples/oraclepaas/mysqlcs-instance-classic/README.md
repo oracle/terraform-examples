@@ -11,7 +11,7 @@ This example creates an Oracle MySQL Cloud Service instance on Oracle Cloud Infr
 Create a local `terraform.tfvars` with your account credentials, e.g.
 
 ```
-identity_domain_name="mydomain"
+identity_domain="mydomain"
 service_id="590595900"
 identity_service_id="idcs-5bb188b5460045f3943c57b783db7ffa"
 user="user@example.com"
@@ -22,7 +22,7 @@ region="uscom-central-1"
 source_ip="59.59.59.59"
 ```
 
-Set the `source_ip` to the ip address, or list of ip address and cidr ranges to allow access the the MySQL instance and EM console.
+Set the `source_ip` to the IP address, or list of IP Addresses or CIDR ranges to allow access to the MySQL instance and EM console.
 
 To create the MySQL Cloud Service database instance
 
