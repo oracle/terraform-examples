@@ -1,5 +1,5 @@
 provider "opc" {
-  version         = "0.0.0"
+  version         = "~> 1.2"
   user            = "${var.user}"
   password        = "${var.password}"
   identity_domain = "${var.domain}"
