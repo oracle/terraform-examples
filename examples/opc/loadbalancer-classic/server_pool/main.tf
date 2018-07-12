@@ -15,26 +15,16 @@ resource "opc_compute_acl" "acl" {
 }
 
 module "security_all_egress" {
-  source = "./security_rules/all_egress"
+  source = "../security_rules/all_egress"
   name   = "${var.name}"
   acl    = "${opc_compute_acl.acl.name}"
 }
 
 module "security_ssh_ingress" {
-  source        = "./security_rules"
+  source        = "../security_rules"
   name_prefix   = "${var.name}"
   port          = "22"
   protocol_name = "ssh"
-  ip_protocol   = "tcp"
-  direction     = "ingress"
-  acl           = "${opc_compute_acl.acl.name}"
-}
-
-module "security_web_ingress" {
-  source        = "./security_rules"
-  name_prefix   = "${var.name}"
-  port          = "7777"
-  protocol_name = "web"
   ip_protocol   = "tcp"
   direction     = "ingress"
   acl           = "${opc_compute_acl.acl.name}"

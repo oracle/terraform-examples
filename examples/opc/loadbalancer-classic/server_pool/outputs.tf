@@ -9,3 +9,7 @@ output "private_ip_addresses" {
 output "vnicset" {
   value = "${opc_compute_vnic_set.vnicset.name}"
 }
+
+output "server_acl" {
+  value = "${opc_compute_acl.acl.name}"
+}

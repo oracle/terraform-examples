@@ -1,5 +1,5 @@
 provider "opc" {
-  version         = "~> 1.2"
+  version         = "0.0.0"
   user            = "${var.user}"
   password        = "${var.password}"
   identity_domain = "${var.domain}"
@@ -31,8 +31,10 @@ module "server_pool" {
 
 module "webapp" {
   source               = "./webapp"
+  name                 = "webapp"
   servers              = "${module.server_pool.public_ip_addresses}"
   server_count         = "${local.server_count}"
+  server_acl           = "${module.server_pool.server_acl}"
   ssh_user             = "${local.ssh_user}"
   private_ssh_key_file = "${local.private_ssh_key_file}"
   public_ssh_key_file  = "${local.public_ssh_key_file}"
@@ -42,7 +44,7 @@ module "load_balancer" {
   source     = "./load_balancer"
   region     = "${var.region}"
   name       = "webapp-lb1"
-  servers    = ["${formatlist("%s:%s", module.server_pool.private_ip_addresses, "7777")}"]
+  servers    = ["${formatlist("%s:%s", module.server_pool.private_ip_addresses, module.webapp.port)}"]
   ip_network = "/Compute-${var.domain}/${var.user}/${module.server_network.ipnetwork}"
   vnic_set   = "/Compute-${var.domain}/${var.user}/${module.server_pool.vnicset}"
   dns_name   = "${local.dns_name}"
