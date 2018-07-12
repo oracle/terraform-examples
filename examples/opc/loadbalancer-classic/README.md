@@ -4,7 +4,7 @@ Example Load Balancer Classic Terraform Configuration
 
 This example demonstrates how to configure the Oracle Cloud Infrastructure Load Balancer Classic service using Terraform
 
-The example creates a complete application deployment include the the backend servers and load balance the traffic beens the deployed web applications.  The configuration is split into 4 sub modules:
+The example creates a complete application deployment including the backend servers, and load balances the traffic across the deployed web applications.  The configuration is split into several sub modules:
 
 - `network` creates the IP Network for the server and load balancer deployment
 - `server_pool` creates a requested number of Oracle Cloud Infrastructure Classic compute instances on on the configured IP Network
@@ -14,13 +14,13 @@ The example creates a complete application deployment include the the backend se
 
 Note this example assumes the load balancer is being setup to load balance a site at the fictional address `mydomain.example.com`.   To see the load balancer actually working this hostname should be changed to a domain you have access to in order to update the public DNS CNAME record so the host is redirected to the load balancers canonical host name.
 
-Steps:
+### Steps
 
 - Generate an ssh key pair for use deploying this example (no passphrase)
 
-```sh
-$ ssh-keygen -f ./id_rsa
-```
+  ```sh
+  $ ssh-keygen -f ./id_rsa
+  ```
 
 - Create a local `terraform.tfvars` file with your environment specific credentials
 
