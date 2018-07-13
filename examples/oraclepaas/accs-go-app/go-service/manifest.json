@@ -1,0 +1,7 @@
+{
+  "runtime": {
+    "majorVersion": "1.8.3"
+  },
+  "command": "sh ./start.sh",
+  "notes": "Go Application Sample"
+}
