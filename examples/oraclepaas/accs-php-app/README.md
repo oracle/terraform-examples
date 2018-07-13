@@ -3,20 +3,24 @@ Example PHP Application Deployment to Oracle Application Container Cloud Service
 
 This example demonstrates how to package and deploy a sample PHP Language application to Oracle Application Container Cloud Service using Terraform
 
-The sample application is based the example ["Deploy a PHP Application to Oracle Cloud
-"](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/apaas/php/getting-started-php-accs/getting-started-php-accs.html)
+The sample application is based the example ["Deploy a PHP Application to Oracle Cloud"](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/apaas/php/getting-started-php-accs/getting-started-php-accs.html)
+
+The Terraform configuration:
+
+- Packages the PHP sample application in the `./php-app` directory
+- Uploads the packaged sample application to an Object Storage Classic container
+- Launches the sample application instance on Application Container Cloud
 
 ### Steps
 
+Create a local `terraform.tfvars` file with your environment specific credentials
 
-- Create a local `terraform.tfvars` file with your environment specific credentials
-
-  ```
-  domain="mydomain"
-  user="user@example.com"
-  password="Pa55_Word"
-  storage_endpoint="https://mydomain.storage.oraclecloud.com"
-  ```
+```
+domain="mydomain"
+user="user@example.com"
+password="Pa55_Word"
+storage_endpoint="https://mydomain.storage.oraclecloud.com"
+```
 
 To create the application instance
 
