@@ -28,7 +28,6 @@ data "archive_file" "example-php-app" {
   output_path = "${path.module}/php-app.zip"
 }
 
-
 resource "opc_storage_container" "accs-apps" {
   name = "my-accs-apps"
 }
