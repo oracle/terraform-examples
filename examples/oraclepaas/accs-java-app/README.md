@@ -5,7 +5,14 @@ Deploys a Tomcat based Java application to the Java SE runtime on Oracle Applica
 
 This example is based on the [Getting Started with Oracle Application Container Cloud](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/apaas/acc-getting-started/welcome.html) tutorial
 
-- Download the employees-web-app.zip from and save it to the local folder http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/apaas/acc-getting-started/files/employees-web-app.zip
+The Terraform configuration:
+
+- Uploads the `employees-web-app.zip` sample application to the Object Storage Classic container
+- Launches the sample application instance on Application Container Cloud
+
+### Steps
+
+- Download the `employees-web-app.zip` from and save it to the local folder http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/apaas/acc-getting-started/files/employees-web-app.zip
 
 - Create a local `terraform.tfvars` file with your environment specific credentials
 
@@ -15,7 +22,6 @@ This example is based on the [Getting Started with Oracle Application Container 
   password="Pa55_Word"
   storage_endpoint="https://mydomain.storage.oraclecloud.com"
   ```
-
 
 To create the application instance
 

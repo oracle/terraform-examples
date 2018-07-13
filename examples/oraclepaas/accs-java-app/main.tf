@@ -1,7 +1,8 @@
 variable user {}
 variable password {}
 variable domain {}
-variable endpoint {}
+variable compute_endpoint {}
+variable storage_endpoint {}
 
 provider "oraclepaas" {
   version              = "~> 1.3"
@@ -12,7 +13,7 @@ provider "oraclepaas" {
 }
 
 provider "opc" {
-  version              = "~> 1.1"
+  version              = "~> 1.2"
   user                 = "${var.user}"
   password             = "${var.password}"
   identity_domain      = "${var.domain}"
@@ -44,5 +45,5 @@ resource "oraclepaas_application_container" "example-java-app" {
 }
 
 output "web_url" {
-  value = "${oraclepaas_application_container.java-app.web_url}"
+  value = "${oraclepaas_application_container.example-java-app.web_url}"
 }

@@ -5,8 +5,7 @@ variable compute_endpoint {}
 variable storage_endpoint {}
 
 provider "oraclepaas" {
-  # version              = "~> 1.3"
-  version              = "0.0.0"
+  version              = "~> 1.3"
   user                 = "${var.user}"
   password             = "${var.password}"
   identity_domain      = "${var.domain}"
@@ -14,8 +13,7 @@ provider "oraclepaas" {
 }
 
 provider "opc" {
-  # version          = "~> 1.1"
-  version          = "0.0.0"
+  version          = "~> 1.2"
   user             = "${var.user}"
   password         = "${var.password}"
   identity_domain  = "${var.domain}"
@@ -27,7 +25,6 @@ data "archive_file" "example-node-app" {
   source_dir  = "${path.module}/node-app/"
   output_path = "${path.module}/node-app.zip"
 }
-
 
 resource "opc_storage_container" "accs-apps" {
   name = "my-accs-apps"
