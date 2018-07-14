@@ -44,7 +44,7 @@ module "load_balancer" {
   source     = "./load_balancer"
   region     = "${var.region}"
   name       = "webapp-lb1"
-  servers    = ["${formatlist("%s:%s", module.server_pool.private_ip_addresses, module.webapp.port)}"]
+  servers    = ["${formatlist("%s:%s", module.server_pool.hostnames, module.webapp.port)}"]
   ip_network = "/Compute-${var.domain}/${var.user}/${module.server_network.ipnetwork}"
   vnic_set   = "/Compute-${var.domain}/${var.user}/${module.server_pool.vnicset}"
   dns_name   = "${local.dns_name}"

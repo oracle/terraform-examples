@@ -6,6 +6,10 @@ output "private_ip_addresses" {
   value = "${opc_compute_instance.server.*.ip_address}"
 }
 
+output "hostnames" {
+  value = "${formatlist("%s.%s", opc_compute_instance.server.*.hostname, opc_compute_instance.server.*.domain)}"
+}
+
 output "vnicset" {
   value = "${opc_compute_vnic_set.vnicset.name}"
 }
