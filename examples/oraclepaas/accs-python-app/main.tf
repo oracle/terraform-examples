@@ -41,11 +41,10 @@ resource "opc_storage_object" "example-python-app" {
 resource "oraclepaas_application_container" "example-python-app" {
   name              = "PythonWebApp"
   runtime           = "python"
-  repository        = "dockerhub"
   archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-python-app.name}"
   subscription_type = "HOURLY"
 
-  deployment_attributes {
+  deployment {
     memory    = "1G"
     instances = 1
   }

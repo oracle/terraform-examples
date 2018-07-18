@@ -44,7 +44,7 @@ resource "oraclepaas_application_container" "example-node-app" {
   archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-node-app.name}"
   subscription_type = "HOURLY"
 
-  deployment_attributes {
+  deployment {
     memory    = "1G"
     instances = 1
   }

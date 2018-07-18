@@ -35,11 +35,10 @@ resource "opc_storage_object" "example-ruby-app" {
 resource "oraclepaas_application_container" "example-ruby-app" {
   name              = "rubyWebApp"
   runtime           = "ruby"
-  repository        = "dockerhub"
   archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-ruby-app.name}"
   subscription_type = "HOURLY"
 
-  deployment_attributes {
+  deployment {
     memory    = "1G"
     instances = 1
   }
