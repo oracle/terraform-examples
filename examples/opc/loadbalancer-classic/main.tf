@@ -58,7 +58,8 @@ module "load_balancer" {
   ip_network = "/Compute-${var.domain}/${var.user}/${module.server_network.ipnetwork}"
   vnic_set   = "/Compute-${var.domain}/${var.user}/${module.server_pool.vnicset}"
 
-  dns_name    = "${var.dns_name}"
-  ca_cert_pem = "${certificates.ca_cert_pem}"
-  cert_pem    = "${certificates.cert_pem}"
+  dns_name        = "${var.dns_name}"
+  ca_cert_pem     = "${module.certificates.ca_cert_pem}"
+  cert_pem        = "${module.certificates.cert_pem}"
+  private_key_pem = "${module.certificates.private_key_pem}"
 }

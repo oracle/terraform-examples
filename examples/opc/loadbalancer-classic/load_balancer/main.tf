@@ -33,7 +33,7 @@ resource "opc_lbaas_policy" "load_balancing_mechanism_policy" {
 # Listener to direct HTTP traffic for ${var.dns_name} to serverpool1
 resource "opc_lbaas_listener" "listener1" {
   load_balancer = "${opc_lbaas_load_balancer.lb1.id}"
-  name          = "listener1"
+  name          = "listener-http"
   port          = 80
 
   balancer_protocol = "HTTP"
@@ -47,38 +47,30 @@ resource "opc_lbaas_listener" "listener1" {
   ]
 }
 
-# Trusted Certificate for ${var.dns_name}
-resource "opc_lbaas_certificate" "trusted" {
-  name = "trusted-cert1"
-  type = "TRUSTED"
+# Server Certificate
+resource "opc_lbaas_certificate" "cert1" {
+  name = "server-cert"
+  type = "SERVER"
+  private_key = "${var.private_key_pem}"
   certificate_body = "${var.cert_pem}"
   certificate_chain = "${var.ca_cert_pem}"
 }
 
-# Trusted Certificate policy
-resource "opc_lbaas_policy" "trusted_certificate_policy" {
-  load_balancer = "${opc_lbaas_load_balancer.lb1.id}"
-  name          = "example_trusted_certificate_policy"
-
-  trusted_certificate_policy {
-    trusted_certificate = "${opc_lbaas_certificate.trusted.uri}"
-  }
-}
 
 # Listener to direct HTTPS traffic for ${var.dns_name} to serverpool1
 resource "opc_lbaas_listener" "listener2" {
   load_balancer = "${opc_lbaas_load_balancer.lb1.id}"
-  name          = "listener2"
+  name          = "listener-https"
   port          = 443
 
   balancer_protocol = "HTTPS"
   server_protocol   = "HTTP"
+  certificates      = ["${opc_lbaas_certificate.cert1.uri}"]
   server_pool       = "${opc_lbaas_server_pool.serverpool1.uri}"
 
   virtual_hosts = ["${var.dns_name}"]
 
   policies = [
     "${opc_lbaas_policy.load_balancing_mechanism_policy.uri}",
-    "${opc_lbaas_policy.trusted_certificate_policy.uri}"
   ]
 }
