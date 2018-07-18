@@ -46,6 +46,7 @@ resource "opc_compute_instance" "server" {
     index              = 0
     ip_network         = "${var.ip_network}"
     is_default_gateway = true
+    dns                = ["${var.name}${count.index}"]
     vnic               = "${var.name}${count.index}_eth0"
     vnic_sets          = ["${opc_compute_vnic_set.vnicset.name}"]
     nat                = ["${element(opc_compute_ip_address_reservation.ipres.*.name, count.index)}"]

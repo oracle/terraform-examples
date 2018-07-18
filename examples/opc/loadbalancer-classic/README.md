@@ -12,7 +12,7 @@ The example creates a complete application deployment including the backend serv
 - `security_rules` creates the security rule resources used to configure the server SSH and web app port access rules.
 - `load_balancer` created the load balancer instances configured to balance the traffic between the servers in the server pool
 
-Note this example assumes the load balancer is being setup to load balance a site at the fictional address `mydomain.example.com`.   To see the load balancer actually working this hostname should be changed to a domain you have access to in order to update the public DNS CNAME record so the host is redirected to the load balancers canonical host name.
+Note this example assumes the load balancer is being setup to load balance a site at the fictional address `mydomain.example.com`.   To see the load balancer actually working this `dns_name` variable should be set to a domain you have access to in order to update the public DNS CNAME record so the host is redirected to the load balancers canonical host name.
 
 ### Steps
 

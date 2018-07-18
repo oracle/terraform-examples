@@ -1,5 +1,7 @@
+
+
 provider "opc" {
-  version         = "~> 1.2"
+  version         = "0.0.0"
   user            = "${var.user}"
   password        = "${var.password}"
   identity_domain = "${var.domain}"
@@ -12,7 +14,6 @@ locals {
   private_ssh_key_file = "./id_rsa"
   public_ssh_key_file  = "./id_rsa.pub"
   server_count         = 2
-  dns_name             = "mywebapp.example.com"
 }
 
 module "server_network" {
@@ -27,6 +28,15 @@ module "server_pool" {
   server_count   = "${local.server_count}"
   ip_network     = "${module.server_network.ipnetwork}"
   public_ssh_key = "${file(local.public_ssh_key_file)}"
+}
+
+module "certificates" {
+  source = "./certificates"
+  organization = "example.com"
+  province = "ON"
+  country = "Canada"
+  common_name = "${var.dns_name}"
+  dns_names = ["${var.dns_name}"]
 }
 
 module "webapp" {
@@ -44,8 +54,8 @@ module "load_balancer" {
   source     = "./load_balancer"
   region     = "${var.region}"
   name       = "webapp-lb1"
-  servers    = ["${formatlist("%s:%s", module.server_pool.hostnames, module.webapp.port)}"]
+  servers    = ["${formatlist("%s:%s", module.server_pool.private_ip_addresses, module.webapp.port)}"]
   ip_network = "/Compute-${var.domain}/${var.user}/${module.server_network.ipnetwork}"
   vnic_set   = "/Compute-${var.domain}/${var.user}/${module.server_pool.vnicset}"
-  dns_name   = "${local.dns_name}"
+  dns_name   = "${var.dns_name}"
 }

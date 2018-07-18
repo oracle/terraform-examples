@@ -8,7 +8,7 @@ output "server_hostnames" {
 
 
 output "dns_instructions" {
-  value = "Follow your DNS providers guidelines to create/update the CNAME record to redirect the domain `${local.dns_name}` to load balancers `canonical_host_name`"
+  value = "Follow your DNS providers guidelines to create/update the CNAME record to redirect the domain `${var.dns_name}` to load balancers `canonical_host_name`"
 }
 
 output "canonical_host_name" {

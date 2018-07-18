@@ -7,7 +7,7 @@ output "private_ip_addresses" {
 }
 
 output "hostnames" {
-  value = "${formatlist("%s.%s", opc_compute_instance.server.*.hostname, opc_compute_instance.server.*.domain)}"
+  value = "${opc_compute_instance.server.*.hostname}"
 }
 
 output "vnicset" {
