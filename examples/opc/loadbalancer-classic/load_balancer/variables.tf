@@ -8,3 +8,6 @@ variable "servers" {
 }
 
 variable "dns_name" {}
+
+variable "cert_pem" {}
+variable "ca_cert_pem" {}

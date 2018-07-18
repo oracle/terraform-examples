@@ -1,7 +1,7 @@
 
 
 provider "opc" {
-  version         = "0.0.0"
+  version         = "~>1.3"
   user            = "${var.user}"
   password        = "${var.password}"
   identity_domain = "${var.domain}"
@@ -57,5 +57,8 @@ module "load_balancer" {
   servers    = ["${formatlist("%s:%s", module.server_pool.private_ip_addresses, module.webapp.port)}"]
   ip_network = "/Compute-${var.domain}/${var.user}/${module.server_network.ipnetwork}"
   vnic_set   = "/Compute-${var.domain}/${var.user}/${module.server_pool.vnicset}"
-  dns_name   = "${var.dns_name}"
+
+  dns_name    = "${var.dns_name}"
+  ca_cert_pem = "${certificates.ca_cert_pem}"
+  cert_pem    = "${certificates.cert_pem}"
 }
