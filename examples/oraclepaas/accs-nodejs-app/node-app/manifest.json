@@ -1,0 +1,8 @@
+{
+  "runtime":{
+    "majorVersion":"6"
+  },
+  "command": "node myapp.js",
+  "release": {},
+  "notes": "Hello World application"
+}

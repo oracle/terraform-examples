@@ -20,22 +20,28 @@ provider "opc" {
   storage_endpoint = "${var.storage_endpoint}"
 }
 
+data "archive_file" "example-node-app" {
+  type        = "zip"
+  source_dir  = "${path.module}/node-app/"
+  output_path = "${path.module}/node-app.zip"
+}
+
 resource "opc_storage_container" "accs-apps" {
   name = "my-accs-apps"
 }
 
-resource "opc_storage_object" "example-java-app" {
-  name         = "employees-web-app.zip"
+resource "opc_storage_object" "example-node-app" {
+  name         = "node-app.zip"
   container    = "${opc_storage_container.accs-apps.name}"
-  file         = "./employees-web-app.zip"
-  etag         = "${md5(file("./employees-web-app.zip"))}"
+  file         = "${data.archive_file.example-node-app.output_path}"
+  etag         = "${data.archive_file.example-node-app.output_md5}"
   content_type = "application/zip;charset=UTF-8"
 }
 
-resource "oraclepaas_application_container" "example-java-app" {
-  name              = "EmployeeWebApp"
-  runtime           = "java"
-  archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-java-app.name}"
+resource "oraclepaas_application_container" "example-node-app" {
+  name              = "nodeWebApp"
+  runtime           = "node"
+  archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-node-app.name}"
   subscription_type = "HOURLY"
 
   deployment {
@@ -45,5 +51,5 @@ resource "oraclepaas_application_container" "example-java-app" {
 }
 
 output "web_url" {
-  value = "${oraclepaas_application_container.example-java-app.web_url}"
+  value = "${oraclepaas_application_container.example-node-app.web_url}"
 }

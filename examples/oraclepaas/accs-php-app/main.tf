@@ -5,7 +5,8 @@ variable compute_endpoint {}
 variable storage_endpoint {}
 
 provider "oraclepaas" {
-  version              = "~> 1.3"
+  # version              = "~> 1.3"
+  version              = "0.0.0"
   user                 = "${var.user}"
   password             = "${var.password}"
   identity_domain      = "${var.domain}"
@@ -13,29 +14,36 @@ provider "oraclepaas" {
 }
 
 provider "opc" {
-  version          = "~> 1.2"
+  # version          = "~> 1.1"
+  version          = "0.0.0"
   user             = "${var.user}"
   password         = "${var.password}"
   identity_domain  = "${var.domain}"
   storage_endpoint = "${var.storage_endpoint}"
 }
 
+data "archive_file" "example-php-app" {
+  type        = "zip"
+  source_dir  = "${path.module}/php-app/"
+  output_path = "${path.module}/php-app.zip"
+}
+
 resource "opc_storage_container" "accs-apps" {
   name = "my-accs-apps"
 }
 
-resource "opc_storage_object" "example-java-app" {
-  name         = "employees-web-app.zip"
+resource "opc_storage_object" "example-php-app" {
+  name         = "php-app.zip"
   container    = "${opc_storage_container.accs-apps.name}"
-  file         = "./employees-web-app.zip"
-  etag         = "${md5(file("./employees-web-app.zip"))}"
+  file         = "${data.archive_file.example-php-app.output_path}"
+  etag         = "${data.archive_file.example-php-app.output_md5}"
   content_type = "application/zip;charset=UTF-8"
 }
 
-resource "oraclepaas_application_container" "example-java-app" {
-  name              = "EmployeeWebApp"
-  runtime           = "java"
-  archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-java-app.name}"
+resource "oraclepaas_application_container" "example-php-app" {
+  name              = "PhpWebApp"
+  runtime           = "php"
+  archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-php-app.name}"
   subscription_type = "HOURLY"
 
   deployment {
@@ -45,5 +53,5 @@ resource "oraclepaas_application_container" "example-java-app" {
 }
 
 output "web_url" {
-  value = "${oraclepaas_application_container.example-java-app.web_url}"
+  value = "${oraclepaas_application_container.example-php-app.web_url}"
 }

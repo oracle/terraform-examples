@@ -24,18 +24,18 @@ resource "opc_storage_container" "accs-apps" {
   name = "my-accs-apps"
 }
 
-resource "opc_storage_object" "example-java-app" {
-  name         = "employees-web-app.zip"
+resource "opc_storage_object" "example-ruby-app" {
+  name         = "app.zip"
   container    = "${opc_storage_container.accs-apps.name}"
-  file         = "./employees-web-app.zip"
-  etag         = "${md5(file("./employees-web-app.zip"))}"
+  file         = "./app.zip"
+  etag         = "${md5(file("./app.zip"))}"
   content_type = "application/zip;charset=UTF-8"
 }
 
-resource "oraclepaas_application_container" "example-java-app" {
-  name              = "EmployeeWebApp"
-  runtime           = "java"
-  archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-java-app.name}"
+resource "oraclepaas_application_container" "example-ruby-app" {
+  name              = "rubyWebApp"
+  runtime           = "ruby"
+  archive_url       = "${opc_storage_container.accs-apps.name}/${opc_storage_object.example-ruby-app.name}"
   subscription_type = "HOURLY"
 
   deployment {
@@ -45,5 +45,5 @@ resource "oraclepaas_application_container" "example-java-app" {
 }
 
 output "web_url" {
-  value = "${oraclepaas_application_container.example-java-app.web_url}"
+  value = "${oraclepaas_application_container.example-ruby-app.web_url}"
 }

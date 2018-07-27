@@ -1,0 +1,7 @@
+{
+  "runtime": {
+    "majorVersion": "3.6.0"
+  },
+  "command": "python app.py",
+  "notes": "Simple REST Service"
+}

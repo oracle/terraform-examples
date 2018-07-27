@@ -1,0 +1,7 @@
+{
+  "runtime":{
+    "majorVersion":"7.1"
+  },
+  "release": {},
+  "notes": "Hello World PHP application"
+}
