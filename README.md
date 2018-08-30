@@ -10,6 +10,6 @@ This repository provides sample/example terraform configurations and modules for
 Examples
 --------
 
-- [Oracle Cloud Infrastructure](https://github.com/oracle/terraform-provider-oci/tree/master/docs/examples)
+- [Oracle Cloud Infrastructure](examples/oci)
 - [Oracle Cloud Infrastructure Classic](examples/opc)
 - [Oracle Cloud Platform](examples/oraclepaas)
