@@ -1,8 +1,3 @@
-resource "oci_core_drg" "drg_vpn_gateway" {
-  compartment_id = "${var.compartment_ocid}"
-  display_name   = "vcn_vpn_drg_01"
-}
-
 resource "oci_core_drg_attachment" "drg_vpn_attachment" {
   drg_id       = "${oci_core_drg.drg_vpn_gateway.id}"
   vcn_id       = "${oci_core_virtual_network.vcn_vpn.id}"
