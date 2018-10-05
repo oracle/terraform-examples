@@ -1,6 +1,6 @@
 ////// environment setup ///////
 variable "instance_shape" {
-  default = "VM.Standard1.1"
+  default = "VM.Standard2.1"
 }
 
 variable "instance_image_ocid" {
@@ -16,23 +16,25 @@ variable "instance_image_ocid" {
   }
 }
 
-data "oci_identity_availability_domains" "ADs" {
+data "oci_identity_availability_domains" "ads" {
   compartment_id = "${var.compartment_ocid}"
 }
 
+//VCN local CIDR block
 variable "vcn_vpn_cidr_block" {
   description = "VCN IP range"
   default     = "172.31.0.0/16"
 }
 
+//VCN local subnets
 variable "vcn_vpn_subnets_cidr_blocks" {
-  description = "VCN IP range"
+  description = "VCN subnets"
   default     = ["172.31.0.0/24", "172.31.1.0/24", "172.31.2.0/24"]
 }
 
 variable "cpe_ip_address" {
   //update to your external IP ADDRESS
-  default = "127.0.0.1"
+  default = "1.2.3.4"
 }
 
 variable "ipsec_static_routes" {
@@ -40,7 +42,8 @@ variable "ipsec_static_routes" {
   default = ["0.0.0.0/0"]
 }
 
-variable "vcn_vpn_on_premises_cidr_block" {
-  description = "VCN IP range"
+//On premises LAN IP range
+variable "on_premises_cidr_block" {
+  description = "On premises IP range"
   default = "10.20.0.0/16"
 }

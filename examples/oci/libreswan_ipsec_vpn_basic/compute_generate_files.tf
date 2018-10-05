@@ -48,7 +48,7 @@ conn oci1
   #local
   right=${var.cpe_ip_address}                   #on Premises Libreswan network
   rightid=${var.cpe_ip_address}     #AWS Libreswan Public IP address
-  rightsubnet=${var.vcn_vpn_on_premises_cidr_block}           #on Premises CIDR
+  rightsubnet=${var.on_premises_cidr_block}           #on Premises CIDR
 OCICONF
 }
 
