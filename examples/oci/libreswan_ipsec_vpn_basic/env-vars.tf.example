@@ -1,0 +1,19 @@
+provider "oci" {
+  tenancy_ocid     = "ocid1.tenancy.oc1..aaaaaaaai4rkucr3xn5lo5gvcnllps3g2jn6zp3........."
+  user_ocid        = "ocid1.user.oc1..aaaaaaaa7eoi4okh6uc6umurljdgq452i6kbbo6pa3........."
+  fingerprint      = "c6:31:01:0e:87:5e:ae:5d:7f:00:00:00:00:00:00:00"
+  private_key_path = "./.oci/oci_api_key.pem"
+  region           = "${var.region}"
+}
+
+variable "compartment_ocid" {
+  type        = "string"
+  description = "Default compartment OCID"
+  default     = "ocid1.compartment.oc1..aaaaaaaaobgrpjxtpj23qnwhyqsg5czbpyofmoi3........."
+}
+
+variable "region" {
+  type        = "string"
+  description = "home region"
+  default     = "eu-frankfurt-1"
+}
