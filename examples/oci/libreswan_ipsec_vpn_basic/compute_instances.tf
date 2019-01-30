@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 resource "oci_core_instance" "server01" {
   availability_domain = "${oci_core_subnet.subnet01.availability_domain}"
   compartment_id      = "${var.compartment_ocid}"

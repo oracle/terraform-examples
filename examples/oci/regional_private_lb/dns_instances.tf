@@ -1,3 +1,4 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # Launch and configure DNS VMs
 

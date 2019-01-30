@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 resource "oci_core_virtual_network" "vcn_vpn" {
   cidr_block     = "${var.vcn_vpn_cidr_block}"
   dns_label      = "vcnvpn"

@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 variable "user-data-webservers" {
   default = <<EOF
 #!/bin/bash -x

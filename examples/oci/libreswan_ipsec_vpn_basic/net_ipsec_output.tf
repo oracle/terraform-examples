@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 data "oci_core_ipsec_config" "vcn_vpn_ipsec_data" {
   ipsec_id = "${oci_core_ipsec.ip_sec_connection_default.id}"
 }

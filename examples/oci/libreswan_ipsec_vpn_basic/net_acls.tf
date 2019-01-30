@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 resource "oci_core_security_list" "security_list_default" {
   display_name   = "security_list_default"
   compartment_id = "${oci_core_virtual_network.vcn_vpn.compartment_id}"

@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 output "drg_gateway" {
   value = ["${oci_core_drg.drg_vpn_gateway.display_name}",
   			"${oci_core_drg_attachment.drg_vpn_attachment.display_name}",
