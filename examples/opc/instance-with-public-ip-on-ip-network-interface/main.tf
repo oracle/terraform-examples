@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 provider "opc" {
   user            = "${var.user}"
   password        = "${var.password}"

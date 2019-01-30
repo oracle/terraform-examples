@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 variable user {}
 variable password {}
 variable domain {}
@@ -14,12 +16,12 @@ resource "oraclepaas_database_service_instance" "database" {
   name              = "my-terraformed-database"
   description       = "Created by Terraform"
   shape             = "oc1m"
-  subscription_type = "HOURLY" // HOURLY MONTHLY
+  subscription_type = "HOURLY"                       // HOURLY MONTHLY
   ssh_public_key    = "${file("~/.ssh/id_rsa.pub")}"
 
   notification_email = "${var.user}"
 
-  edition = "EE" // SE EE EE_HP EE_EP
+  edition = "EE"       // SE EE EE_HP EE_EP
   version = "18.0.0.0" // 18.0.0.0 or 12.2.0.1 or 12.1.0.2 or 11.2.0.4
 
   bring_your_own_license   = false // Bring Your Own License (BYOL) is supported only with Universal Credits account.

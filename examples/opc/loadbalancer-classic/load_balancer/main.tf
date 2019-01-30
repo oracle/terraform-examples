@@ -1,3 +1,4 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # main load balancer instance
 resource "opc_lbaas_load_balancer" "lb1" {
@@ -9,7 +10,6 @@ resource "opc_lbaas_load_balancer" "lb1" {
   ip_network        = "${var.ip_network}"
   permitted_methods = ["GET", "HEAD", "POST", "PUT"]
 }
-
 
 # Server Pool for backend Origin Servers
 resource "opc_lbaas_server_pool" "serverpool1" {
@@ -49,13 +49,12 @@ resource "opc_lbaas_listener" "listener1" {
 
 # Server Certificate
 resource "opc_lbaas_certificate" "cert1" {
-  name = "server-cert"
-  type = "SERVER"
-  private_key = "${var.private_key_pem}"
-  certificate_body = "${var.cert_pem}"
+  name              = "server-cert"
+  type              = "SERVER"
+  private_key       = "${var.private_key_pem}"
+  certificate_body  = "${var.cert_pem}"
   certificate_chain = "${var.ca_cert_pem}"
 }
-
 
 # Listener to direct HTTPS traffic for ${var.dns_name} to serverpool1
 resource "opc_lbaas_listener" "listener2" {

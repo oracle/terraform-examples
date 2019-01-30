@@ -1,3 +1,5 @@
+// Copyright (c) 2017, 2019, Oracle and/or its affiliates. All rights reserved.
+
 variable "user" {}
 variable "password" {}
 variable "domain" {}
@@ -23,9 +25,9 @@ resource "opc_compute_ssh_key" "instance" {
 }
 
 module "bastion-host" {
-  source = "modules/bastion"
-  ssh_public_key = "${opc_compute_ssh_key.bastion.name}"
-  ssh_private_key = "${file("./bastion_id_rsa")}"
+  source             = "modules/bastion"
+  ssh_public_key     = "${opc_compute_ssh_key.bastion.name}"
+  ssh_private_key    = "${file("./bastion_id_rsa")}"
   private_ip_network = "${opc_compute_ip_network.private-ip-network.name}"
 }
 
@@ -36,11 +38,11 @@ resource "opc_compute_ip_network" "private-ip-network" {
 }
 
 resource "opc_compute_instance" "private-instance" {
-  name                = "private1"
-  hostname            = "private1"
-  shape               = "oc3"
-  image_list          = "/oracle/public/OL_7.2_UEKR4_x86_64"
-  ssh_keys            = [ "${opc_compute_ssh_key.instance.name}" ]
+  name       = "private1"
+  hostname   = "private1"
+  shape      = "oc3"
+  image_list = "/oracle/public/OL_7.2_UEKR4_x86_64"
+  ssh_keys   = ["${opc_compute_ssh_key.instance.name}"]
 
   networking_info {
     index          = 0
@@ -61,7 +63,7 @@ resource "opc_compute_instance" "private-instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo 'This instance was provisioned by Terraform.' | sudo tee /etc/motd"
+      "echo 'This instance was provisioned by Terraform.' | sudo tee /etc/motd",
     ]
   }
 }

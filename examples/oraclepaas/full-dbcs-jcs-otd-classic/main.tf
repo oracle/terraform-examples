@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 variable user {}
 variable password {}
 variable domain {}
@@ -15,7 +17,8 @@ locals {
   # Java Service name cannot have more than 30 chars; must start with a letter and can contain only letters and numbers.
   # If the service name contains a hyphen; Oracle-managed load balancer will not be created.
   java_service_name = "tfjcsdemo"
-  database_name     = "my-terraformed-database-demo"
+
+  database_name = "my-terraformed-database-demo"
 }
 
 resource "oraclepaas_database_service_instance" "database" {

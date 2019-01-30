@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 variable "user" {}
 variable "password" {}
 variable "identity_domain" {}
@@ -9,13 +11,15 @@ variable "compartment_ocid" {}
 variable "tenancy_ocid" {}
 variable "user_ocid" {}
 variable "fingerprint" {}
-variable "private_key_path" { default = "~/.oci/oci_api_key.pem" }
+
+variable "private_key_path" {
+  default = "~/.oci/oci_api_key.pem"
+}
 
 variable "object_storage_bucket" {}
 variable "object_storage_namespace" {}
 variable "object_storage_user" {}
 variable "swift_password" {}
-
 
 provider "oci" {
   tenancy_ocid     = "${var.tenancy_ocid}"
@@ -26,11 +30,11 @@ provider "oci" {
 }
 
 provider "oraclepaas" {
-  version           = "~> 1.2"
-  user              = "${var.user}"
-  password          = "${var.password}"
-  identity_domain   = "${var.identity_service_id}"
-  mysql_endpoint    = "https://psm.us.oraclecloud.com/"
+  version         = "~> 1.2"
+  user            = "${var.user}"
+  password        = "${var.password}"
+  identity_domain = "${var.identity_service_id}"
+  mysql_endpoint  = "https://psm.us.oraclecloud.com/"
 }
 
 data "oci_identity_availability_domains" "ADs" {
@@ -52,11 +56,11 @@ resource "oraclepaas_mysql_service_instance" "example" {
   shape               = "VM.Standard2.1"
 
   mysql_configuration {
-    db_name         = "demo_db"
-    db_storage      = 50
-    mysql_port      = 3306
-    mysql_username  = "root"
-    mysql_password  = "Pa55_Word"
+    db_name        = "demo_db"
+    db_storage     = 50
+    mysql_port     = 3306
+    mysql_username = "root"
+    mysql_password = "Pa55_Word"
 
     enterprise_monitor_configuration {
       em_agent_password = "Pa55_Word"

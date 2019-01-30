@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 provider "opc" {
   user            = "${var.user}"
   password        = "${var.password}"
@@ -10,11 +12,11 @@ data "opc_compute_storage_volume_snapshot" "snapshot1" {
 }
 
 resource "opc_compute_storage_volume" "volume1" {
-  name             = "volume-from-storage-snapshot"
-  snapshot         = "/Compute-${var.domain}/${var.user}/${data.opc_compute_storage_volume_snapshot.snapshot1.name}"
-  size             = "${data.opc_compute_storage_volume_snapshot.snapshot1.size}"
-  storage_type     = "/oracle/public/storage/default"
-  bootable         = "${data.opc_compute_storage_volume_snapshot.snapshot1.parent_volume_bootable}"
+  name         = "volume-from-storage-snapshot"
+  snapshot     = "/Compute-${var.domain}/${var.user}/${data.opc_compute_storage_volume_snapshot.snapshot1.name}"
+  size         = "${data.opc_compute_storage_volume_snapshot.snapshot1.size}"
+  storage_type = "/oracle/public/storage/default"
+  bootable     = "${data.opc_compute_storage_volume_snapshot.snapshot1.parent_volume_bootable}"
 }
 
 resource "opc_compute_instance" "instance1" {

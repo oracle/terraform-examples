@@ -1,30 +1,31 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 variable user {}
 variable password {}
-variable identity_domain { }
-variable identity_service_id { }
+variable identity_domain {}
+variable identity_service_id {}
 variable service_id {}
 variable endpoint {}
 
 variable source_ip {}
 
-
 provider "oraclepaas" {
-  version           = "~> 1.2"
-  user              = "${var.user}"
-  password          = "${var.password}"
-  identity_domain   = "${var.identity_service_id}"
-  mysql_endpoint    = "https://psm.us.oraclecloud.com/"
+  version         = "~> 1.2"
+  user            = "${var.user}"
+  password        = "${var.password}"
+  identity_domain = "${var.identity_service_id}"
+  mysql_endpoint  = "https://psm.us.oraclecloud.com/"
 }
 
 provider "opc" {
-  user              = "${var.user}"
-  password          = "${var.password}"
-  identity_domain   = "${var.service_id}"
-  endpoint          = "${var.endpoint}"
+  user            = "${var.user}"
+  password        = "${var.password}"
+  identity_domain = "${var.service_id}"
+  endpoint        = "${var.endpoint}"
 }
 
 resource "opc_compute_ip_network" "example" {
-  name = "example_ip_network"
+  name              = "example_ip_network"
   ip_address_prefix = "192.168.100.0/24"
 }
 
@@ -43,11 +44,11 @@ resource "oraclepaas_mysql_service_instance" "example" {
   shape      = "oc3"
 
   mysql_configuration {
-    db_name         = "demo_db"
-    db_storage      = 25
-    mysql_port      = 3306
-    mysql_username  = "root"
-    mysql_password  = "Pa55_Word"
+    db_name        = "demo_db"
+    db_storage     = 25
+    mysql_port     = 3306
+    mysql_username = "root"
+    mysql_password = "Pa55_Word"
 
     enterprise_monitor_configuration {
       em_agent_password = "Pa55_Word"
@@ -60,30 +61,30 @@ resource "oraclepaas_mysql_service_instance" "example" {
 
   backups {
     cloud_storage_container = "Storage-${var.identity_domain}/my-paas-backup"
-    cloud_storage_username = "${var.user}"
-    cloud_storage_password = "${var.password}"
+    cloud_storage_username  = "${var.user}"
+    cloud_storage_password  = "${var.password}"
     create_if_missing       = true
   }
 }
 
 resource "oraclepaas_mysql_access_rule" "db_access" {
-	name                = "db_access"
-	description         = "Created by Terraform"
+  name                = "db_access"
+  description         = "Created by Terraform"
   service_instance_id = "${oraclepaas_mysql_service_instance.example.name}"
-	ports               = "${oraclepaas_mysql_service_instance.example.mysql_configuration.0.mysql_port}"
-	source              = "${var.source_ip}"
-	destination         = "mysql_MASTER"
-	enabled             = true
+  ports               = "${oraclepaas_mysql_service_instance.example.mysql_configuration.0.mysql_port}"
+  source              = "${var.source_ip}"
+  destination         = "mysql_MASTER"
+  enabled             = true
 }
 
 resource "oraclepaas_mysql_access_rule" "em_access" {
-	name                = "em_access"
-	description         = "Created by Terraform"
+  name                = "em_access"
+  description         = "Created by Terraform"
   service_instance_id = "${oraclepaas_mysql_service_instance.example.name}"
-	ports               = "${oraclepaas_mysql_service_instance.example.mysql_configuration.0.enterprise_monitor_configuration.0.em_port}"
-	source              = "${var.source_ip}"
-	destination         = "mysql_MASTER"
-	enabled             = true
+  ports               = "${oraclepaas_mysql_service_instance.example.mysql_configuration.0.enterprise_monitor_configuration.0.em_port}"
+  source              = "${var.source_ip}"
+  destination         = "mysql_MASTER"
+  enabled             = true
 }
 
 output "public_ip_address" {

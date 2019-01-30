@@ -1,4 +1,4 @@
-
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 provider "opc" {
   version         = "~>1.2"
@@ -31,12 +31,12 @@ module "server_pool" {
 }
 
 module "certificates" {
-  source = "./certificates"
+  source       = "./certificates"
   organization = "example.com"
-  province = "ON"
-  country = "Canada"
-  common_name = "${var.dns_name}"
-  dns_names = ["${var.dns_name}"]
+  province     = "ON"
+  country      = "Canada"
+  common_name  = "${var.dns_name}"
+  dns_names    = ["${var.dns_name}"]
 }
 
 module "webapp" {

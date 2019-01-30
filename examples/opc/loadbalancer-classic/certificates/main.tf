@@ -1,8 +1,8 @@
-
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 resource "tls_private_key" "example" {
   algorithm = "RSA"
-  rsa_bits = 4096
+  rsa_bits  = 4096
 }
 
 resource "tls_self_signed_cert" "ca" {
@@ -10,17 +10,17 @@ resource "tls_self_signed_cert" "ca" {
   private_key_pem = "${tls_private_key.example.private_key_pem}"
 
   validity_period_hours = "${var.validity_period_hours}"
-  early_renewal_hours = "${var.early_renewal_hours}"
+  early_renewal_hours   = "${var.early_renewal_hours}"
 
   allowed_uses = [
-    "cert_signing"
+    "cert_signing",
   ]
 
   dns_names = ["${var.dns_names}"]
 
   subject {
-      common_name  = "${var.common_name}"
-      organization = "${var.organization}"
+    common_name  = "${var.common_name}"
+    organization = "${var.organization}"
   }
 
   is_ca_certificate = true
@@ -33,8 +33,8 @@ resource "tls_cert_request" "example" {
   subject {
     common_name  = "${var.common_name}"
     organization = "${var.organization}"
-    province = "${var.province}"
-    country = "${var.country}"
+    province     = "${var.province}"
+    country      = "${var.country}"
   }
 
   dns_names = ["${var.dns_names}"]
@@ -49,6 +49,6 @@ resource "tls_locally_signed_cert" "example" {
   validity_period_hours = "${var.validity_period_hours}"
 
   allowed_uses = [
-    "server_auth"
+    "server_auth",
   ]
 }
