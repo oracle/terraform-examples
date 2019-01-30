@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 resource "oci_core_subnet" "subnet01" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ads.availability_domains[0],"name")}"
   cidr_block          = "${var.vcn_vpn_subnets_cidr_blocks[0]}"

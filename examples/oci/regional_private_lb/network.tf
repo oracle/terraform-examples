@@ -1,3 +1,4 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # Create vcn, mgmt and related resources
 # MgmtSubnets for DNS VMs

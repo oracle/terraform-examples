@@ -1,3 +1,4 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 output "BackendInstance1" {
     value = "${data.oci_core_vnic.Instance1Vnic.public_ip_address}"

@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 # Outputing required info for users
 output "Bridge Instance Public IP" {
   value = "${data.oci_core_vnic.BridgeInstanceVnic1.public_ip_address}"

@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 output "test_command_libreswan" {
   value = <<LIBREINSTALL
 #generated with terraform at ${timestamp()}

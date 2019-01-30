@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 ////// environment setup ///////
 variable "instance_shape" {
   default = "VM.Standard2.1"
