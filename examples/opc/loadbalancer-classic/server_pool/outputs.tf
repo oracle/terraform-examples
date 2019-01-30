@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 output "public_ip_addresses" {
   value = "${opc_compute_ip_address_reservation.ipres.*.ip_address}"
 }

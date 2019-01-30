@@ -1,4 +1,6 @@
-resource "opc_compute_security_list" "bastion" {
+// Copyright (c) 2017, 2019, Oracle and/or its affiliates. All rights reserved.
+
+esource "opc_compute_security_list" "bastion" {
   name                 = "bastion"
   policy               = "DENY"
   outbound_cidr_policy = "PERMIT"

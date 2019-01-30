@@ -1,3 +1,4 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
 
 locals {
   web_app_port = "80"
@@ -29,7 +30,7 @@ resource "null_resource" "install_httpd" {
       "sudo yum -y install httpd",
       "sudo systemctl enable httpd",
       "sudo systemctl start httpd",
-      "echo '<h1>Hello from server${count.index}</h1>' | sudo tee /var/www/html/index.html"
+      "echo '<h1>Hello from server${count.index}</h1>' | sudo tee /var/www/html/index.html",
     ]
   }
 }

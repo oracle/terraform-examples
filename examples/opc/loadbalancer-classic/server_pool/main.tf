@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 resource "opc_compute_ssh_key" "sshkey" {
   name    = "${var.name}-ssh-key"
   key     = "${var.public_ssh_key}"

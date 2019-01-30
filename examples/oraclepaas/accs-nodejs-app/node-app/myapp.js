@@ -1,3 +1,5 @@
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
+
 var http = require('http');
 // Read Environment Parameters
 var port = Number(process.env.PORT || 8080);

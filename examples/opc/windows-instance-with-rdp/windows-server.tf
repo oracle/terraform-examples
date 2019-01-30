@@ -1,3 +1,5 @@
+// Copyright (c) 2017, 2019, Oracle and/or its affiliates. All rights reserved.
+
 provider "opc" {
   user            = "${var.user}"
   password        = "${var.password}"
@@ -28,10 +30,10 @@ resource "opc_compute_instance" "instance1" {
   instance_attributes = "${data.template_file.userdata.rendered}"
 
   networking_info {
-    index = 0
+    index          = 0
     shared_network = true
-    nat = [ "${opc_compute_ip_reservation.ipreservation1.name}" ]
-    sec_lists = [ "${opc_compute_security_list.seclist1.name}" ]
+    nat            = ["${opc_compute_ip_reservation.ipreservation1.name}"]
+    sec_lists      = ["${opc_compute_security_list.seclist1.name}"]
   }
 }
 
