@@ -1,17 +1,4 @@
-// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
-
 # The Second VCN
-variable "vcn_cidr2" {
-  default = "10.1.0.0/16"
-}
-
-variable "mgmt_subnet_cidr2" {
-  default = "10.1.0.0/24"
-}
-
-variable "private_subnet_cidr2" {
-  default = "10.1.1.0/24"
-}
 
 # Second VCN
 resource "oci_core_virtual_network" "CoreVCN2" {
@@ -92,10 +79,10 @@ resource "oci_core_route_table" "PrivateRouteTable2" {
   vcn_id         = "${oci_core_virtual_network.CoreVCN2.id}"
   display_name   = "PrivateRouteTable2"
 
-  route_rules {
+   route_rules {
     cidr_block        = "0.0.0.0/0"
     network_entity_id = "${lookup(data.oci_core_private_ips.BridgeInstancePrivateIP2.private_ips[0],"id")}"
-  }
+  } 
 }
 
 resource "oci_core_subnet" "PrivateSubnet2" {
@@ -123,7 +110,7 @@ resource "oci_core_instance" "PrivateInstance2" {
   }
 
   metadata {
-    ssh_authorized_keys = "${var.ssh_public_key}"
+    ssh_authorized_keys = "${file(var.ssh_public_key_path)}"
   }
 
   timeouts {
