@@ -1,6 +1,4 @@
-
-
-
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved
 resource "oci_core_virtual_network" "CoreVCN" {
   cidr_block     = "${var.vcn_cidr}"
   compartment_id = "${var.compartment_ocid}"

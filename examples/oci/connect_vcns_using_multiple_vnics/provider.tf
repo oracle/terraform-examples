@@ -1,6 +1,6 @@
-
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved
 provider "oci" {
-  version          = ">= 3.14.1-preview"
+  version          = ">= 3.14"
   tenancy_ocid     = "${var.tenancy_ocid}"
   user_ocid        = "${var.user_ocid}"
   fingerprint      = "${var.fingerprint}"

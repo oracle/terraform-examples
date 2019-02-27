@@ -1,4 +1,4 @@
-# The Second VCN
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved
 
 # Second VCN
 resource "oci_core_virtual_network" "CoreVCN2" {
