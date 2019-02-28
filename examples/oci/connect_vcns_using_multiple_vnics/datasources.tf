@@ -28,20 +28,35 @@ data "oci_core_private_ips" "BridgeInstancePrivateIP2" {
 # Get the OCID of the primary VNIC
 data "oci_core_vnic" "BridgeInstanceVnic1" {
    depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
-   vnic_id = "${lookup(data.oci_core_vnic_attachments.BridgeInstanceVnics.vnic_attachments[0],"vnic_id")}"
+   vnic_id = "${lookup(data.oci_core_vnic_attachments.BridgeInstanceVnicAttachmentPrimary.vnic_attachments[0],"vnic_id")}"
 }
 
 # Get the OCID of the secondary VNIC
 data "oci_core_vnic" "BridgeInstanceVnic2" {
    depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
-   vnic_id = "${lookup(data.oci_core_vnic_attachments.BridgeInstanceVnics.vnic_attachments[1],"vnic_id")}"
+   vnic_id = "${lookup(data.oci_core_vnic_attachments.BridgeInstanceVnicAttachmentSecondary.vnic_attachments[0],"vnic_id")}"
 }
 
-data "oci_core_vnic_attachments" "BridgeInstanceVnics" {
+data "oci_core_vnic_attachments" "BridgeInstanceVnicAttachmentPrimary" {
   depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
+  compartment_id = "${var.compartment_ocid}"
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
+  instance_id = "${data.oci_core_instance.bridge_instance.id}"
+
+  filter {
+    name = "subnet_id"
+    values = [
+      "${oci_core_subnet.MgmtSubnet.id}"]
+  }
+}
+
+data "oci_core_vnic_attachments" "BridgeInstanceVnicAttachmentSecondary" {
   compartment_id      = "${var.compartment_ocid}"
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
   instance_id         = "${data.oci_core_instance.bridge_instance.id}"
-} 
 
-
+  filter {
+    name = "subnet_id"
+    values = ["${oci_core_subnet.MgmtSubnet2.id}"]
+  }
+}
