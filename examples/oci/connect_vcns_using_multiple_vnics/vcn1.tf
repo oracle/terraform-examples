@@ -103,7 +103,7 @@ resource "oci_core_route_table" "PrivateRouteTable" {
   route_rules {
     cidr_block        = "0.0.0.0/0"
     network_entity_id = "${oci_core_private_ip.BridgeInstancePrivateIP.id}"
-  } 
+  }
 }
 
 resource "oci_core_subnet" "PrivateSubnet" {

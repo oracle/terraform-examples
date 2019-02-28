@@ -79,10 +79,10 @@ resource "oci_core_route_table" "PrivateRouteTable2" {
   vcn_id         = "${oci_core_virtual_network.CoreVCN2.id}"
   display_name   = "PrivateRouteTable2"
 
-   route_rules {
+  route_rules {
     cidr_block        = "0.0.0.0/0"
     network_entity_id = "${lookup(data.oci_core_private_ips.BridgeInstancePrivateIP2.private_ips[0],"id")}"
-  } 
+  }
 }
 
 resource "oci_core_subnet" "PrivateSubnet2" {

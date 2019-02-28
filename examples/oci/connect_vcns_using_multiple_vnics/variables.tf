@@ -1,15 +1,16 @@
 // Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved
 variable "tenancy_ocid" {}
+
 variable "user_ocid" {}
 variable "fingerprint" {}
 variable "private_key_path" {}
 variable "private_key_password" {}
 variable "compartment_ocid" {}
 variable "region" {}
-variable "ssh_public_key_path" {
-}
-variable "ssh_private_key_path" {
-}
+variable "ssh_public_key_path" {}
+
+variable "ssh_private_key_path" {}
+
 # Choose an Availability Domain
 variable "AD" {
   default = "1"
