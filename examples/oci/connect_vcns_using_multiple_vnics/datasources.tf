@@ -12,24 +12,22 @@ data "oci_core_instance" "bridge_instance" {
 }
 
 data "oci_core_instance_pool_instances" "bridge_instance_pool_instances" {
-
+    depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
     compartment_id = "${var.compartment_ocid}"
     instance_pool_id = "${oci_core_instance_pool.bridge_instance_pool.id}"
 }
 
 # Gets a list of private IPs on the second VNIC
 
-resource "oci_core_private_ip" "BridgeInstancePrivateIP" {
-  vnic_id      = "${data.oci_core_vnic.BridgeInstanceVnic1.id}"
-  display_name = "BridgeInstancePrivateIP"
-}
 data "oci_core_private_ips" "BridgeInstancePrivateIP2" {
+  depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
   vnic_id = "${data.oci_core_vnic.BridgeInstanceVnic2.id}"
 }
 
 
 # Get the OCID of the primary VNIC
 data "oci_core_vnic" "BridgeInstanceVnic1" {
+   depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
    vnic_id = "${lookup(data.oci_core_vnic_attachments.BridgeInstanceVnics.vnic_attachments[0],"vnic_id")}"
 }
 
@@ -40,6 +38,7 @@ data "oci_core_vnic" "BridgeInstanceVnic2" {
 }
 
 data "oci_core_vnic_attachments" "BridgeInstanceVnics" {
+  depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
   compartment_id      = "${var.compartment_ocid}"
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
   instance_id         = "${data.oci_core_instance.bridge_instance.id}"

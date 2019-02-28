@@ -49,7 +49,11 @@ resource "oci_core_instance_pool" "bridge_instance_pool" {
     size = "1"
 }
 
-
+resource "oci_core_private_ip" "BridgeInstancePrivateIP" {
+depends_on = ["oci_core_instance_pool.bridge_instance_pool"]
+  vnic_id      = "${data.oci_core_vnic.BridgeInstanceVnic1.id}"
+  display_name = "BridgeInstancePrivateIP"
+}
 
 # Configurations for setting up the secondary VNIC
 resource "null_resource" "configure-secondary-vnic" {
