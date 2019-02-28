@@ -1,17 +1,4 @@
-// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
-
-# The Second VCN
-variable "vcn_cidr2" {
-  default = "10.1.0.0/16"
-}
-
-variable "mgmt_subnet_cidr2" {
-  default = "10.1.0.0/24"
-}
-
-variable "private_subnet_cidr2" {
-  default = "10.1.1.0/24"
-}
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved
 
 # Second VCN
 resource "oci_core_virtual_network" "CoreVCN2" {
@@ -123,7 +110,7 @@ resource "oci_core_instance" "PrivateInstance2" {
   }
 
   metadata {
-    ssh_authorized_keys = "${var.ssh_public_key}"
+    ssh_authorized_keys = "${file(var.ssh_public_key_path)}"
   }
 
   timeouts {

@@ -1,8 +1,7 @@
-// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
-
+// Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved
 # Outputing required info for users
 output "Bridge Instance Public IP" {
-  value = "${data.oci_core_vnic.BridgeInstanceVnic1.public_ip_address}"
+  value = "${data.oci_core_instance.bridge_instance.public_ip}"
 }
 
 output "PrivateInstance1 Private IP" {
@@ -14,7 +13,7 @@ output "PrivateInstance2 Private IP" {
 }
 
 output "SSH login to the Bridge Instance" {
-  value = "ssh -A opc@${data.oci_core_vnic.BridgeInstanceVnic1.public_ip_address}"
+  value = "ssh -A opc@${data.oci_core_instance.bridge_instance.public_ip}"
 }
 
 output "SSH login to the Private Instance-1 after logging into Bridge Instance as shown above" {
