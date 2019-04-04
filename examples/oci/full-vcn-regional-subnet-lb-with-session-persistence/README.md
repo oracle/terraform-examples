@@ -6,7 +6,7 @@
     #   | |_| |  _ < / ___ | |___| |___| |___
     #    \___/|_| \_/_/   \_\____|_____|_____|
 ***
-## # Full VCN with Service Gateway, NAT Gateway and One Tier Web App with 1 Load Balancer & 2 static instances running on OCI
+### Full VCN with Service Gateway, NAT Gateway and One Tier Web App with 1 Load Balancer & 2 static instances running on OCI
 
 ### Using this example
 * Update env-vars with the required information. Most examples use the same set of environment variables so you only need to do this once.
