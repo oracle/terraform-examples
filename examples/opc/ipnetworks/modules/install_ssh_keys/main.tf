@@ -9,7 +9,7 @@ variable "ssh_user" {}
 
 // Install the private ssh key used to access the other hosts
 resource "null_resource" "install_ssh_keys" {
-  triggers {
+  triggers = {
     compute_instance = "${var.trigger}"
   }
 

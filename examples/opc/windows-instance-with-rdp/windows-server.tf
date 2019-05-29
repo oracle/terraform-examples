@@ -9,7 +9,7 @@ provider "opc" {
 }
 
 data "template_file" "userdata" {
-  vars {
+  vars = {
     admin_password = "${var.administrator_password}"
   }
 

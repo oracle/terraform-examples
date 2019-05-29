@@ -26,7 +26,7 @@ resource "opc_compute_ssh_key" "instance" {
 }
 
 module "bastion-host" {
-  source             = "modules/bastion"
+  source             = "./modules/bastion"
   ssh_public_key     = "${opc_compute_ssh_key.bastion.name}"
   ssh_private_key    = "${file("./bastion_id_rsa")}"
   private_ip_network = "${opc_compute_ip_network.private-ip-network.name}"
