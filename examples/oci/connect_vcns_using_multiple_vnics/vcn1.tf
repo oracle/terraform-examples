@@ -29,42 +29,43 @@ resource "oci_core_security_list" "MgmtSecurityList" {
   display_name   = "MgmtSecurityList"
   vcn_id         = "${oci_core_virtual_network.CoreVCN.id}"
 
-  egress_security_rules = [{
+  egress_security_rules {
     protocol    = "all"
     destination = "0.0.0.0/0"
-  }]
+  }
 
-  ingress_security_rules = [{
+  ingress_security_rules {
     protocol = "all"
     source   = "${var.vcn_cidr}"
-  },
-    {
-      protocol = "all"
-      source   = "${var.vcn_cidr2}"
-    },
-    {
-      protocol = "6"
-      source   = "0.0.0.0/0"
+  }
 
-      tcp_options {
-        "min" = 22
-        "max" = 22
-      }
-    },
-    {
-      protocol = "1"
-      source   = "0.0.0.0/0"
+  ingress_security_rules {
+    protocol = "all"
+    source   = "${var.vcn_cidr2}"
+  }
 
-      icmp_options {
-        "type" = 3
-        "code" = 4
-      }
-    },
-  ]
+  ingress_security_rules {
+    protocol = "6"
+    source   = "0.0.0.0/0"
+
+    tcp_options {
+      min = 22
+      max = 22
+    }
+  }
+  ingress_security_rules {
+    protocol = "1"
+    source   = "0.0.0.0/0"
+
+    icmp_options {
+      type = 3
+      code = 4
+    }
+  }
 }
 
 resource "oci_core_subnet" "MgmtSubnet" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1], "name")}"
   cidr_block          = "${var.mgmt_subnet_cidr}"
   display_name        = "MgmtSubnet"
   compartment_id      = "${var.compartment_ocid}"
@@ -80,20 +81,20 @@ resource "oci_core_security_list" "PrivateSecurityList" {
   display_name   = "PrivateSecurityList"
   vcn_id         = "${oci_core_virtual_network.CoreVCN.id}"
 
-  egress_security_rules = [{
+  egress_security_rules {
     protocol    = "all"
     destination = "0.0.0.0/0"
-  }]
+  }
 
-  ingress_security_rules = [{
+  ingress_security_rules {
     protocol = "all"
     source   = "${var.vcn_cidr}"
-  },
-    {
-      protocol = "all"
-      source   = "${var.vcn_cidr2}"
-    },
-  ]
+  }
+
+  ingress_security_rules {
+    protocol = "all"
+    source   = "${var.vcn_cidr2}"
+  }
 }
 
 resource "oci_core_route_table" "PrivateRouteTable" {
@@ -108,7 +109,7 @@ resource "oci_core_route_table" "PrivateRouteTable" {
 }
 
 resource "oci_core_subnet" "PrivateSubnet" {
-  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
+  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1], "name")}"
   cidr_block                 = "${var.private_subnet_cidr}"
   display_name               = "PrivateSubnet"
   compartment_id             = "${var.compartment_ocid}"
@@ -120,7 +121,7 @@ resource "oci_core_subnet" "PrivateSubnet" {
 }
 
 resource "oci_core_instance" "PrivateInstance" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1], "name")}"
   compartment_id      = "${var.compartment_ocid}"
   display_name        = "PrivateInstance"
   image               = "${var.InstanceImageOCID[var.region]}"
@@ -131,7 +132,7 @@ resource "oci_core_instance" "PrivateInstance" {
     assign_public_ip = false
   }
 
-  metadata {
+  metadata = {
     ssh_authorized_keys = "${file(var.ssh_public_key_path)}"
   }
 
