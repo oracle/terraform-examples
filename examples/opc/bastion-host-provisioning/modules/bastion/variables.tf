@@ -6,7 +6,7 @@ variable "ssh_public_key" {
 }
 
 variable "ssh_private_key" {
-  description = "(Required) SSH private key. E.g. `${file("~/.ssh/id_rsa")}`"
+  description = "(Required) SSH private key."
 }
 
 variable "ssh_user" {

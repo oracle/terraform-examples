@@ -7,7 +7,7 @@ variable "domain" {}
 variable "endpoint" {}
 
 provider "opc" {
-  version         = "~> 1.0.1"
+  version         = "> 1.0.1"
   user            = "${var.user}"
   password        = "${var.password}"
   identity_domain = "${var.domain}"
