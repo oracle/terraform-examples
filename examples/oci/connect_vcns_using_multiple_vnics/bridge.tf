@@ -21,13 +21,9 @@ resource "oci_core_instance_configuration" "bridge_instance_configuration" {
       display_name   = "BridgeInstance"
       shape          = "${var.InstanceShape}"
 
-      metadata {
+      metadata = {
         ssh_authorized_keys = "${file(var.ssh_public_key_path)}"
         user_data           = "${base64encode(file("user_data.tpl"))}"
-      }
-
-      timeouts {
-        create = "10m"
       }
     }
 
@@ -40,6 +36,10 @@ resource "oci_core_instance_configuration" "bridge_instance_configuration" {
       }
     }
   }
+
+  timeouts {
+    create = "10m"
+  }
 }
 
 resource "oci_core_instance_pool" "bridge_instance_pool" {
@@ -48,7 +48,7 @@ resource "oci_core_instance_pool" "bridge_instance_pool" {
   instance_configuration_id = "${oci_core_instance_configuration.bridge_instance_configuration.id}"
 
   placement_configurations {
-    availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1],"name")}"
+    availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1], "name")}"
     primary_subnet_id   = "${oci_core_subnet.MgmtSubnet.id}"
 
     secondary_vnic_subnets {
@@ -86,7 +86,7 @@ resource "null_resource" "configure-secondary-vnic" {
   provisioner "remote-exec" {
     inline = [
       "sudo chmod 777 /tmp/secondary_vnic_all_configure.sh",
-      "sudo /tmp/secondary_vnic_all_configure.sh -c ${lookup(data.oci_core_private_ips.BridgeInstancePrivateIP2.private_ips[0],"id")}",
+      "sudo /tmp/secondary_vnic_all_configure.sh -c ${lookup(data.oci_core_private_ips.BridgeInstancePrivateIP2.private_ips[0], "id")}",
       "sudo ip route add ${var.vcn_cidr2} dev ens4 via ${oci_core_subnet.MgmtSubnet2.virtual_router_ip}",
     ]
   }
