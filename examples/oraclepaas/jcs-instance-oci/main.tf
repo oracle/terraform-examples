@@ -18,6 +18,10 @@ variable user_ocid {}
 variable private_key_path {}
 variable fingerprint {}
 
+terraform {
+  required_version = "~> 0.11.0"
+}
+
 provider "oraclepaas" {
   user            = "${var.user}"
   password        = "${var.password}"
@@ -36,7 +40,7 @@ provider "oci" {
 data "terraform_remote_state" "database" {
   backend = "local"
 
-  config {
+  config = {
     path = "../dbcs-instance-oci/terraform.tfstate"
   }
 }
