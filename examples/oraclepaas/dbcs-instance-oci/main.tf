@@ -52,13 +52,11 @@ resource "oci_core_subnet" "subnet" {
   compartment_id      = "${var.compartment_ocid}"
   vcn_id              = "${oci_core_virtual_network.tf-vcn1.id}"
   security_list_ids   = ["${oci_core_virtual_network.tf-vcn1.default_security_list_id}"]
-  vcn_id              = "${oci_core_virtual_network.tf-vcn1.id}"
   route_table_id      = "${oci_core_virtual_network.tf-vcn1.default_route_table_id}"
   dhcp_options_id     = "${oci_core_virtual_network.tf-vcn1.default_dhcp_options_id}"
 }
 
 resource "oraclepaas_database_service_instance" "database" {
-  count             = 1
   name              = "${local.database_service_name}"
   description       = "Created by Terraform"
   version           = "12.2.0.1"
