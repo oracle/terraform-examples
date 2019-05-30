@@ -19,7 +19,7 @@ resource "oci_core_default_route_table" "tf-default-route-table" {
   display_name               = "tf-default-route-table"
 
   route_rules {
-    cidr_block        = "0.0.0.0/0"
+    destination       = "0.0.0.0/0"
     network_entity_id = "${oci_core_internet_gateway.tf-ig1.id}"
   }
 }
@@ -30,7 +30,7 @@ resource "oci_core_route_table" "tf-route-table1" {
   display_name   = "tf-route-table1"
 
   route_rules {
-    cidr_block        = "0.0.0.0/0"
+    destination       = "0.0.0.0/0"
     network_entity_id = "${oci_core_internet_gateway.tf-ig1.id}"
   }
 }
@@ -75,8 +75,8 @@ resource "oci_core_default_security_list" "tf-default-security-list" {
     stateless   = true
 
     udp_options {
-      "min" = 319
-      "max" = 320
+      min = 319
+      max = 320
     }
   }
 
@@ -87,8 +87,8 @@ resource "oci_core_default_security_list" "tf-default-security-list" {
     stateless = false
 
     tcp_options {
-      "min" = 22
-      "max" = 22
+      min = 22
+      max = 22
     }
   }
 
@@ -99,8 +99,8 @@ resource "oci_core_default_security_list" "tf-default-security-list" {
     stateless = true
 
     icmp_options {
-      "type" = 3
-      "code" = 4
+      type = 3
+      code = 4
     }
   }
 }
